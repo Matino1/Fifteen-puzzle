@@ -32,7 +32,22 @@ namespace pietnastka
                     }
                 }
             }
-            return numbers.Distinct().Count() == numbers.Count() && zeros == 1 ? true : false;
+            numbers.Sort();
+
+            if (zeros == 1)
+                numbers.RemoveAt(0);
+            else
+                return false;
+
+            for (int i = 1; i < numbers.Count - 1; i++)
+            {
+                if (numbers[i] != numbers[i - 1] + 1)
+                {
+                    return false;
+                }
+            }
+            return true;
+            //return numbers.Distinct().Count() == numbers.Count() ? true : false;
         }
 
         private int [] findZeroPosition(int [,] board)
