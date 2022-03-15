@@ -10,16 +10,21 @@ for (int i = 0; i < 2; i++)
         game[i, j] = x++;
     }
 }
+
+int[,] game2 = new int[2, 2] { { 4, 5 }, { 0, 3 } };
+
 game[0, 0] = 0;
-Gameboard gameboard = new Gameboard(game);
-gameboard.printBoard();
 
-Node node = new Node(0, gameboard);
-node.addChildren();
-node.getChildren()[0].getGameboard().printBoard();
-node.getChildren()[1].getGameboard().printBoard();
 
-Thread.Sleep(100000);
+Gameboard gameboard2 = new Gameboard(game2);
+Gameboard gameboard3 = new Gameboard(game);
+
+gameboard2.printBoard();
+gameboard3.printBoard();
+Console.WriteLine(gameboard2.getBoardString());
+Console.WriteLine(gameboard3.getBoardString());
+
+
 
 //Console.WriteLine(gameboard.IsFinished());
 //Console.WriteLine(gameboard.isMoveLegal);

@@ -62,5 +62,10 @@ namespace pietnastka
                 addChild(moves[x]);
             }
         }
+
+        public string getBoardString()
+        {
+            return board.getBoardString();
+        }
     }
 }
