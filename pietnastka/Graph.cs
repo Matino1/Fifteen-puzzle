@@ -6,7 +6,23 @@ using System.Threading.Tasks;
 
 namespace pietnastka
 {
-    internal class Class1
+    internal class Graph
     {
+        private List<List<Node>> nodes;
+
+        public Graph()
+        {
+            nodes = new List<List<Node>>();
+        }
+
+        public void newNode(Node node)
+        {
+            nodes.Add(new List<Node>());
+        }
+
+        public void addEdge(Node praentNode, Node childrenNode)
+        {
+            nodes[praentNode.id].Add(childrenNode);
+        }
     }
 }
