@@ -22,7 +22,7 @@ namespace pietnastka
 
         public void addEdge(Node praentNode, Node childrenNode)
         {
-            nodes[].Add(childrenNode);
+            //nodes[].Add(childrenNode);
         }
     }
 }

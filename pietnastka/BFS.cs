@@ -29,9 +29,12 @@ namespace pietnastka
 
             Node node;
             List<string> visitedBoards = new List<string>();
-            while (!queue.Any())
+            while (queue.Any())
             {
                 node = queue.Dequeue();
+                Console.WriteLine(node.getStringBoardCode());
+                Console.WriteLine("level: " + node.level);
+
 
                 if (!visitedBoards.Contains(node.getStringBoardCode()))
                 {
@@ -46,11 +49,11 @@ namespace pietnastka
                     }
                 }
 
-                if (node.level < 25)
+                if (node.level < 15)
                 {
                     foreach (Node child in node.getChildren())
                     {
-                        if (!visitedBoards.Contains(node.getStringBoardCode()))
+                        if (!visitedBoards.Contains(child.getStringBoardCode()))
                         {
                             queue.Enqueue(child);
                         }
