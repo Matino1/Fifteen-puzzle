@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "S:\\Other\\Semestr4\\SISE\\pietnastka\\pietnastka\\pietnastka.csproj",
+      "projectUniqueName": "S:\\Other\\Semestr4\\Programowanie\\repository\\Pietnastka\\pietnastka\\pietnastka.csproj",
       "projectName": "pietnastka",
-      "projectPath": "S:\\Other\\Semestr4\\SISE\\pietnastka\\pietnastka\\pietnastka.csproj",
+      "projectPath": "S:\\Other\\Semestr4\\Programowanie\\repository\\Pietnastka\\pietnastka\\pietnastka.csproj",
       "packagesPath": "C:\\Users\\Kurogami\\.nuget\\packages\\",
-      "outputPath": "S:\\Other\\Semestr4\\SISE\\pietnastka\\pietnastka\\obj\\",
+      "outputPath": "S:\\Other\\Semestr4\\Programowanie\\repository\\Pietnastka\\pietnastka\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
