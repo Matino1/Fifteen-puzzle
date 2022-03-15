@@ -29,39 +29,35 @@ namespace pietnastka
 
             Node node;
             List<string> visitedBoards = new List<string>();
-            while(!queue.Any())
+            while (!queue.Any())
             {
                 node = queue.Dequeue();
 
-                if(!node.isVisited)
+                if (!visitedBoards.Contains(node.getStringBoardCode()))
                 {
-                    node.isVisited = true;
+                    visitedBoards.Add(node.getStringBoardCode());
                     if (node.getBoard().IsFinished())
                     {
                         return true;
-                    } 
+                    }
                     else
                     {
                         node.addChildren();
                     }
                 }
 
-                foreach (Node child in node.getChildren())
+                if (node.level < 25)
                 {
-                    if(!child.isVisited)
+                    foreach (Node child in node.getChildren())
                     {
-                        queue.Enqueue(child);
+                        if (!visitedBoards.Contains(node.getStringBoardCode()))
+                        {
+                            queue.Enqueue(child);
+                        }
                     }
                 }
+
             }
-
-            for(int level = 0; level < 22; level++)
-            {
-                rootNode.addChildren();
-                
-            }
-
-
 
             return false;
         }

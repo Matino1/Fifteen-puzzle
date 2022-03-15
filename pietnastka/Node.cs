@@ -9,7 +9,6 @@ namespace pietnastka
     internal class Node
     {
         public int level { get; set; }
-        public bool isVisited { get; set; }
         private Gameboard board;
         private List<Node> children = new List<Node>();
         private char[] moves = new char[4] { 'L', 'R', 'U', 'D' };
@@ -18,12 +17,11 @@ namespace pietnastka
         {
             this.level = level;
             this.board = board;
-            isVisited = false;
         }
 
-        public void Visited()
+        public string getStringBoardCode()
         {
-            isVisited = true;
+            return board.getBoardString();
         }
 
         public Gameboard getBoard()
