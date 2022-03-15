@@ -16,9 +16,34 @@ namespace pietnastka
             this.board = board;
         }
 
+        private bool isLegal()
+        {
+            List<int> numbers = new List<int>();
+            int zeros = 0;
+
+            for (int i = 0; i < board.GetLength(0); i++)
+            {
+                for (int j = 0; j < board.GetLength(1); j++)
+                {
+                    numbers.Add(this.board[i, j]);
+                    if (this.board[i, j] == 0)
+                    {
+                        zeros++;
+                    }
+                }
+            }
+            return numbers.Distinct().Count() == numbers.Count() && zeros == 1 ? true : false;
+        }
+
         private int [] findZeroPosition(int [,] board)
         {
             int[] zeroPosition = new int[2];
+            if (!isLegal())
+            {
+                Console.WriteLine("Board is not legal");
+                return zeroPosition;
+            }
+            
             for (int i = 0; i < board.GetLength(0); i++)
             {
                 for (int j = 0; j < board.GetLength(1); j++)
