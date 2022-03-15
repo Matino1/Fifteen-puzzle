@@ -59,6 +59,19 @@ namespace pietnastka
             return zeroPosition;
         }
 
+        public int [,] copyBoard()
+        {
+            int[,] copiedBoard = new int[this.board.GetLength(0), this.board.GetLength(1)];
+            for (int i = 0; i < board.GetLength(0); i++)
+            {
+                for (int j = 0; j < board.GetLength(1); j++)
+                {
+                    copiedBoard[i, j] = this.board[i, j];
+                }
+            }
+            return copiedBoard;
+        }
+
         public bool isMoveLegal(char move)
         {
             int[] zero = findZeroPosition(this.board);
