@@ -44,7 +44,7 @@ namespace pietnastka
                     {
                         recursionDepth = node.level;
                         nodeVisited = visitedBoards.Count;
-                        //return true;
+                        return true;
                     }
                     else
                     {
