@@ -20,4 +20,5 @@ BFS bfs = new BFS();
 Gameboard gameboard = new Gameboard(game);
 Console.WriteLine(gameboard.IsFinished());
 Console.WriteLine(bfs.result(gameboard));
-Console.WriteLine();
+Console.WriteLine(bfs.recursionDepth);
+Console.WriteLine(bfs.nodeVisited);

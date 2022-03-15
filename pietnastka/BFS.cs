@@ -14,7 +14,6 @@ namespace pietnastka
         public int resultTime { get; set; }
         public int nodeProcessed { get; set; }
 
-
         public BFS()
         {
 
@@ -41,6 +40,8 @@ namespace pietnastka
                     visitedBoards.Add(node.getStringBoardCode());
                     if (node.getBoard().IsFinished())
                     {
+                        recursionDepth = node.level;
+                        nodeVisited = visitedBoards.Count;
                         return true;
                     }
                     else
