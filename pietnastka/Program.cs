@@ -15,3 +15,4 @@ for (int i = 0; i < 2; i++)
 Gameboard gameboard = new Gameboard(game);
 Console.WriteLine(gameboard.IsFinished());
 Console.WriteLine();
+Console.WriteLine();
