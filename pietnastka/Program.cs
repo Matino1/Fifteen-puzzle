@@ -11,8 +11,15 @@ for (int i = 0; i < 2; i++)
         x++;
     }
 }
-
+game[1,0] = 0;
 Gameboard gameboard = new Gameboard(game);
-Console.WriteLine(gameboard.IsFinished());
-Console.WriteLine();
-Console.WriteLine();
+Console.WriteLine(gameboard.isMoveLegal('U'));
+gameboard.printBoard();
+gameboard.moveZero('U');
+gameboard.printBoard();
+Gameboard newGameboard = new Gameboard(game, 'D');
+newGameboard.printBoard();
+
+
+//Console.WriteLine(gameboard.IsFinished());
+//Console.WriteLine(gameboard.isMoveLegal);
