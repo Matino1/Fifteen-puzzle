@@ -33,6 +33,8 @@ namespace pietnastka
                 node = queue.Dequeue();
                 Console.WriteLine(node.getStringBoardCode());
                 Console.WriteLine("level: " + node.level);
+                Console.WriteLine("visited: " + visitedBoards.Count);
+                Console.WriteLine("visited: " + (visitedBoards.Distinct().Count() == visitedBoards.Count));
 
 
                 if (!visitedBoards.Contains(node.getStringBoardCode()))
@@ -42,7 +44,7 @@ namespace pietnastka
                     {
                         recursionDepth = node.level;
                         nodeVisited = visitedBoards.Count;
-                        return true;
+                        //return true;
                     }
                     else
                     {
@@ -50,7 +52,7 @@ namespace pietnastka
                     }
                 }
 
-                if (node.level < 15)
+                if (node.level < 7)
                 {
                     foreach (Node child in node.getChildren())
                     {
