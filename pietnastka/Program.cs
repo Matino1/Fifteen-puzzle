@@ -7,7 +7,7 @@ for (int i = 0; i < 2; i++)
 {
     for (int j = 0; j < 2; j++)
     {
-        game[i, j] = x*2;
+        game[i, j] = x;
         x++;
     }
 }
