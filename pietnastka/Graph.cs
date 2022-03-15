@@ -15,14 +15,14 @@ namespace pietnastka
             nodes = new List<List<Node>>();
         }
 
-        public void newNode(Node node)
+        public void addNode(Node node)
         {
-            nodes.Add(new List<Node>());
+            nodes[node.level].Add(node);
         }
 
         public void addEdge(Node praentNode, Node childrenNode)
         {
-            //nodes[praentNode.id].Add(childrenNode);
+            nodes[].Add(childrenNode);
         }
     }
 }
