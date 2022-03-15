@@ -179,14 +179,22 @@ namespace pietnastka
             {
                 for (int j = 0; j < board.GetLength(1); j++)
                 {
-                    if (board[i, j] == x)
+                    if (i == board.GetLength(0) - 1 && j == board.GetLength(1) - 1)
                     {
-                        x++;
-                    }
+                        return board[i, j] == 0 ? true : false;
+                    } 
                     else
                     {
-                        return false;
+                        if (board[i, j] == x)
+                        {
+                            x++;
+                        }
+                        else
+                        {
+                            return false;
+                        }
                     }
+                    
                 }
             }
             return true;
