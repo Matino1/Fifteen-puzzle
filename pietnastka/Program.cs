@@ -1,7 +1,12 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using pietnastka;
 
-int[,] game = new int[4, 4]{ {2,0, 3, 4},
+int[,] game = new int[4, 4]{ {2, 0, 3, 4},
+                             {1, 6, 7, 8},
+                             {5, 10, 11, 12},
+                             {9, 13, 14, 15 } };
+
+int[,] game2 = new int[4, 4]{ {0, 2, 3, 4},
                              {1, 6, 7, 8},
                              {5, 10, 11, 12},
                              {9, 13, 14, 15 } };
@@ -18,7 +23,10 @@ for (int i = 0; i < 2; i++)
 BFS bfs = new BFS();
 
 Gameboard gameboard = new Gameboard(game);
-Console.WriteLine(gameboard.IsFinished());
-Console.WriteLine(bfs.result(gameboard));
-Console.WriteLine(bfs.recursionDepth);
-Console.WriteLine(bfs.nodeVisited);
+Gameboard gameboard2 = new Gameboard(game2);
+
+//Console.WriteLine(bfs.result(gameboard));
+//Console.WriteLine("Solution depth: " + bfs.depth);
+//Console.WriteLine("Nodes visited: " + bfs.nodesVisited);
+//Console.Write("Solution: ");
+//bfs.getSolution().ForEach(move => Console.Write(move));

@@ -9,16 +9,21 @@ namespace pietnastka
     internal class BFS
     {
         public int resultLenght { get; set; }
-        public int nodeVisited { get; set; }
-        public int recursionDepth { get; set; }
+        public int nodesVisited { get; set; }
+        public int depth { get; set; }
         public int resultTime { get; set; }
         public int nodeProcessed { get; set; }
 
-        private List<char> solutionMoves = new List<char>();
+        private List<char> solutionMoves = new();
 
         public BFS()
         {
 
+        }
+
+        public List<char> getSolution()
+        {
+            return solutionMoves;   
         }
 
         public bool result(Gameboard rootBoard)
@@ -29,55 +34,53 @@ namespace pietnastka
             queue.Enqueue(rootNode);
 
             Node node;
-            List<string> visitedBoards = new List<string>();
+            List<long> visitedBoards = new List<long>();
             while (queue.Any())
             {
                 node = queue.Dequeue();
-                Console.WriteLine(node.getStringBoardCode());
-                Console.WriteLine("level: " + node.level);
-                Console.WriteLine("visited: " + visitedBoards.Count);
+                //Console.WriteLine(node.getStringBoardCode());
+                //Console.WriteLine("level: " + node.level);
+                //Console.WriteLine("visited: " + visitedBoards.Count);
                 //Console.WriteLine("visited: " + (visitedBoards.Distinct().Count() == visitedBoards.Count));
-                node.getGameboard().printBoard();
+                //node.getGameboard().printBoard();
 
 
-                if (!visitedBoards.Contains(node.getStringBoardCode()))
+                if (!visitedBoards.Contains(node.getBoardHash()))
                 {
-                    visitedBoards.Add(node.getStringBoardCode());
+                    visitedBoards.Add(node.getBoardHash());
                     if (node.getGameboard().IsFinished())
                     {
-                        recursionDepth = node.level;
-                        nodeVisited = visitedBoards.Count;
+                        depth = node.level;
                         solutionMoves = node.getPreviousMoves();
-                        solutionMoves.ForEach(move => Console.Write(move));
-                        Console.WriteLine();
-                        return true;
+                        //return true;
                     }
-                    else
+
+                    List<char> moves = new List<char>();
+                    foreach (char move in node.getPossibleMoves())
                     {
-                        List<char> moves = new List<char>();
-                        foreach (char move in node.getPossibleMoves())
-                        {
-                            if (node.getGameboard().isMoveLegal(move))
-                                if (!visitedBoards.Contains(node.getGameboard().nextMove(move)))
-                                    moves.Add(move);
-                        }
-                        node.addChildren(moves);
+                        if (node.getGameboard().isMoveLegal(move))
+                            if (!visitedBoards.Contains(node.getGameboard().nextMove(move)))
+                                moves.Add(move);
                     }
+
+                    if (node.level < 7)
+                        node.addChildren(moves);
+                }
+                else
+                {
+                    nodesVisited--;
                 }
 
                 if (node.level < 7)
                 {
                     foreach (Node child in node.getChildren())
                     {
-                        if (!visitedBoards.Contains(child.getStringBoardCode()))
-                        {
-                            queue.Enqueue(child);
-                        }
+                        queue.Enqueue(child);
                     }
                 }
 
             }
-
+            nodesVisited = visitedBoards.Count;
             return false;
         }
     }

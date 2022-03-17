@@ -40,9 +40,9 @@ namespace pietnastka
                 this.previousMoves.Add(move);
         }   
 
-        public string getStringBoardCode()
+        public long getBoardHash()
         {
-            return board.getBoardString();
+            return board.getBoardHash();
         }
 
         public Gameboard getGameboard()
@@ -81,11 +81,6 @@ namespace pietnastka
                     if (x == move)
                         addChild(move);
             }
-        }
-
-        public string getBoardString()
-        {
-            return board.getBoardString();
         }
     }
 }

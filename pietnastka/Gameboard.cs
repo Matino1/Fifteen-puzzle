@@ -9,6 +9,10 @@ namespace pietnastka
 {
     internal class Gameboard
     {
+        private readonly int prime1 = 5;
+        private readonly int prime2 = 3;
+        private readonly int prime3 = 7;
+
         private int[,] board = new int[4, 4];
 
         public Gameboard(int[,] board)
@@ -16,14 +20,14 @@ namespace pietnastka
             this.board = board;
         }
 
-        public string nextMove(char move)
+        public long nextMove(char move)
         {
             int [,] copiedBoard = copyBoard();
             Gameboard newGame = new Gameboard(copiedBoard);
             if (newGame.isMoveLegal(move))
                 newGame.moveZero(move);
 
-            return newGame.getBoardString();
+            return newGame.getBoardHash();
         }
 
         private bool isLegal()
@@ -209,17 +213,17 @@ namespace pietnastka
             }
             return true;
         }
-        public string getBoardString()
+        public long getBoardHash()
         {
-            string boardString = "";
+            long hash = prime1;
             for (int i = 0; i < board.GetLength(0); i++)
             {
                 for (int j = 0; j < board.GetLength(1); j++)
                 {
-                    boardString += this.board[i, j].ToString();
+                    hash = hash * prime2 + board[i, j];
                 }
             }
-            return boardString;
+            return hash;
         }
     }
 }
