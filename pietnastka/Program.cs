@@ -1,10 +1,10 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using pietnastka;
 
-int[,] game = new int[4, 4]{ {1, 2, 3, 4},
-                             {5, 6, 7, 8},
-                             {0, 10, 11, 12},
-                             {9, 13, 14, 15 } };
+int[,] game = new int[4, 4]{ {0, 1, 2, 7},
+                             {8, 9, 12, 10},
+                             {13, 3, 6, 4 },
+                             {15, 14, 11, 5 } };
 
 int[,] game2 = new int[4, 4]{ {0, 2, 3, 4},
                              {1, 6, 7, 8},

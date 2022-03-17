@@ -8,6 +8,7 @@ namespace pietnastka
 {
     internal class BFS
     {
+        public readonly int maxLevel = 7;
         public int resultLenght { get; set; }
         public int nodesVisited { get; set; }
         public int depth { get; set; }
@@ -38,7 +39,7 @@ namespace pietnastka
             while (queue.Any())
             {
                 node = queue.Dequeue();
-                Console.WriteLine(queue.Count);
+                //Console.WriteLine(queue.Count);
                 Console.WriteLine(node.level);
 
                 //Console.WriteLine(node.getStringBoardCode());
@@ -67,7 +68,7 @@ namespace pietnastka
                             if (!visitedBoards.Contains(node.getGameboard().nextMove(move)))
                                 moves.Add(move);
                     }
-                    if (node.level < 7)
+                    if (node.level < maxLevel)
                         node.addChildren(moves);
                 }
                 else
@@ -77,12 +78,12 @@ namespace pietnastka
 
                 foreach (Node child in node.getChildren())
                 {
-                    if (child.level <= 7)
+                    if (child.level <= maxLevel)
                         queue.Enqueue(child);
                 }
 
             }
-            nodesVisited = visitedBoards.Count;
+            nodesVisited = visitedBoards.Count - 1;
             return false;
         }
     }
