@@ -18,7 +18,7 @@ namespace pietnastka
 
         public BFS()
         {
-
+            depth = -1;
         }
 
         public List<char> getSolution()
@@ -38,6 +38,9 @@ namespace pietnastka
             while (queue.Any())
             {
                 node = queue.Dequeue();
+                Console.WriteLine(queue.Count);
+                Console.WriteLine(node.level);
+
                 //Console.WriteLine(node.getStringBoardCode());
                 //Console.WriteLine("level: " + node.level);
                 //Console.WriteLine("visited: " + visitedBoards.Count);
@@ -52,6 +55,8 @@ namespace pietnastka
                     {
                         depth = node.level;
                         solutionMoves = node.getPreviousMoves();
+                        if (node.getPreviousMoves().Count == 0)
+                            Console.WriteLine("Game already finished");
                         //return true;
                     }
 
@@ -62,7 +67,6 @@ namespace pietnastka
                             if (!visitedBoards.Contains(node.getGameboard().nextMove(move)))
                                 moves.Add(move);
                     }
-
                     if (node.level < 7)
                         node.addChildren(moves);
                 }
@@ -71,12 +75,10 @@ namespace pietnastka
                     nodesVisited--;
                 }
 
-                if (node.level < 7)
+                foreach (Node child in node.getChildren())
                 {
-                    foreach (Node child in node.getChildren())
-                    {
+                    if (child.level <= 7)
                         queue.Enqueue(child);
-                    }
                 }
 
             }
