@@ -16,6 +16,16 @@ namespace pietnastka
             this.board = board;
         }
 
+        public string nextMove(char move)
+        {
+            int [,] copiedBoard = copyBoard();
+            Gameboard newGame = new Gameboard(copiedBoard);
+            if (newGame.isMoveLegal(move))
+                newGame.moveZero(move);
+
+            return newGame.getBoardString();
+        }
+
         private bool isLegal()
         {
             List<int> numbers = new List<int>();

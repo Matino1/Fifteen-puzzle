@@ -14,6 +14,8 @@ namespace pietnastka
         public int resultTime { get; set; }
         public int nodeProcessed { get; set; }
 
+        private List<char> solutionMoves = new List<char>();
+
         public BFS()
         {
 
@@ -34,21 +36,32 @@ namespace pietnastka
                 Console.WriteLine(node.getStringBoardCode());
                 Console.WriteLine("level: " + node.level);
                 Console.WriteLine("visited: " + visitedBoards.Count);
-                Console.WriteLine("visited: " + (visitedBoards.Distinct().Count() == visitedBoards.Count));
+                //Console.WriteLine("visited: " + (visitedBoards.Distinct().Count() == visitedBoards.Count));
+                node.getGameboard().printBoard();
 
 
                 if (!visitedBoards.Contains(node.getStringBoardCode()))
                 {
                     visitedBoards.Add(node.getStringBoardCode());
-                    if (node.getBoard().IsFinished())
+                    if (node.getGameboard().IsFinished())
                     {
                         recursionDepth = node.level;
                         nodeVisited = visitedBoards.Count;
+                        solutionMoves = node.getPreviousMoves();
+                        solutionMoves.ForEach(move => Console.Write(move));
+                        Console.WriteLine();
                         return true;
                     }
                     else
                     {
-                        node.addChildren();
+                        List<char> moves = new List<char>();
+                        foreach (char move in node.getPossibleMoves())
+                        {
+                            if (node.getGameboard().isMoveLegal(move))
+                                if (!visitedBoards.Contains(node.getGameboard().nextMove(move)))
+                                    moves.Add(move);
+                        }
+                        node.addChildren(moves);
                     }
                 }
 
