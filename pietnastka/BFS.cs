@@ -7,41 +7,25 @@ using System.Diagnostics;
 
 namespace pietnastka
 {
-    internal class BFS
+    internal class BFS : SearchingAlgorithm
     {
-        public readonly int maxLevel = 7;
+       /* public readonly int maxLevel = 7;
         public int resultLenght { get; set; }
         public int nodesVisited { get; set; }
         public int depth { get; set; }
         public string resultTime { get; set; }
         public int nodeProcessed { get; set; }
 
-        private List<char> solutionMoves = new();
+        private List<char> solutionMoves = new();*/
 
-        public BFS()
+        public BFS(): base()
         {
-            depth = -1;
+          
         }
 
-        public List<char> getSolution()
+        public override bool result(Gameboard rootBoard, int maxLevel)
         {
-            return solutionMoves;   
-        }
-
-        private void configureElapsedTime(Stopwatch stopwatch)
-        {
-            stopwatch.Stop();
-            TimeSpan ts = stopwatch.Elapsed;
-
-            string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:000}",
-            ts.Hours, ts.Minutes, ts.Seconds,
-            ts.Milliseconds);
-
-            resultTime = elapsedTime;
-        }
-
-        public bool result(Gameboard rootBoard)
-        {
+            this.maxLevel = maxLevel;
             Stopwatch stopWatch = Stopwatch.StartNew();
 
             Node rootNode = new Node(0, rootBoard);
@@ -49,7 +33,7 @@ namespace pietnastka
             Queue<Node> queue = new Queue<Node>();
             queue.Enqueue(rootNode);
 
-            Node node;
+            Node node = null;
             List<long> visitedBoards = new List<long>();
             while (queue.Any())
             {
@@ -99,8 +83,9 @@ namespace pietnastka
                 }
 
             }
+            depth = node.level;
             nodesVisited = visitedBoards.Count - 1;
-            configureElapsedTime(stopWatch);
+            saveElapsedTime(stopWatch);
             return false;
         }
     }

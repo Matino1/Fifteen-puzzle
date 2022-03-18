@@ -20,14 +20,15 @@ for (int i = 0; i < 2; i++)
     }
 }*/
 
-BFS bfs = new();
+
+SearchingAlgorithm bfs = new BFS();
 
 Gameboard gameboard = new Gameboard(game);
-Gameboard gameboard2 = new Gameboard(game2);
+Gameboard gameboard2 = new Gameboard(game);
 
-bfs.result(gameboard2);
+bfs.result(gameboard2, 7);
 Console.WriteLine("Solution depth: " + bfs.depth);
 Console.WriteLine("Nodes visited: " + bfs.nodesVisited);
+Console.WriteLine("Time: " + bfs.resultTime);
 Console.Write("Solution: ");
-Console.WriteLine(bfs.resultTime);
-bfs.getSolution().ForEach(move => Console.Write(move));
+bfs.solutionMoves.ForEach(move => Console.Write(move));

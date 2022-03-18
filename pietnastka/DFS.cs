@@ -13,9 +13,9 @@ namespace pietnastka
 
         }
 
-        public override bool result(Gameboard rootBoard)
+        public override bool result(Gameboard rootBoard, int maxLevel)
         {
-            return true;
+           return true;
         }
     }
 }

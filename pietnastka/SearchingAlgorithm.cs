@@ -16,26 +16,25 @@ namespace pietnastka
         public string resultTime { get; set; }
         public int nodeProcessed { get; set; }
 
-        public List<char> solutionMoves { get;}
+        public List<char> solutionMoves { get; set; }
 
         public SearchingAlgorithm()
         {
             solutionMoves = new();
         }
 
-        public void configureElapsedTime(Stopwatch stopwatch)
+        public void saveElapsedTime(Stopwatch stopwatch)
         {
             stopwatch.Stop();
             TimeSpan ts = stopwatch.Elapsed;
 
-            string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:000}",
-            ts.Hours, ts.Minutes, ts.Seconds,
-            ts.Milliseconds);
+            string elapsedTime = String.Format("{0:00}.{1:000}s",
+            ts.Seconds + (ts.Minutes * 60), ts.Milliseconds);
 
             resultTime = elapsedTime;
         }
 
-        public virtual bool result(Gameboard rootBoard)
+        public virtual bool result(Gameboard rootBoard, int maxLevel)
         {
             return true;
         }
