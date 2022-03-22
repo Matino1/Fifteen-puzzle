@@ -9,7 +9,7 @@ namespace pietnastka
 {
     internal class Gameboard
     {
-        private readonly int prime1 = 5;
+        private readonly int prime1 = 11;
         private readonly int prime2 = 3;
         private readonly int prime3 = 7;
 

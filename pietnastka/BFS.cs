@@ -23,9 +23,8 @@ namespace pietnastka
           
         }
 
-        public override bool result(Gameboard rootBoard, int maxLevel)
+        public override bool result(Gameboard rootBoard)
         {
-            this.maxLevel = maxLevel;
             Stopwatch stopWatch = Stopwatch.StartNew();
 
             Node rootNode = new Node(0, rootBoard);
@@ -33,20 +32,14 @@ namespace pietnastka
             Queue<Node> queue = new Queue<Node>();
             queue.Enqueue(rootNode);
 
-            Node node = null;
+            bool isFinished = false;
+            Node node;
             List<long> visitedBoards = new List<long>();
             while (queue.Any())
             {
                 node = queue.Dequeue();
-                //Console.WriteLine(queue.Count);
-                //Console.WriteLine(node.level);
 
-                //Console.WriteLine(node.getStringBoardCode());
-                //Console.WriteLine("level: " + node.level);
-                //Console.WriteLine("visited: " + visitedBoards.Count);
-                //Console.WriteLine("visited: " + (visitedBoards.Distinct().Count() == visitedBoards.Count));
-                //node.getGameboard().printBoard();
-
+                nodesVisited++;
 
                 if (!visitedBoards.Contains(node.getBoardHash()))
                 {
@@ -54,10 +47,12 @@ namespace pietnastka
                     if (node.getGameboard().IsFinished())
                     {
                         depth = node.level;
+                        maxLevel = node.level;
                         solutionMoves = node.getPreviousMoves();
+                        
                         if (node.getPreviousMoves().Count == 0)
                             Console.WriteLine("Game already finished");
-                        //return true;
+                        isFinished = true;
                         
                     }
                     
@@ -71,22 +66,28 @@ namespace pietnastka
                     if (node.level < maxLevel)
                         node.addChildren(moves);
                 }
-                else
-                {
-                    nodesVisited--;
-                }
+                //Console.WriteLine(nodesVisited);
 
                 foreach (Node child in node.getChildren())
                 {
                     if (child.level <= maxLevel)
                         queue.Enqueue(child);
                 }
-
             }
-            depth = node.level;
-            nodesVisited = visitedBoards.Count - 1;
+
+            nodesProcessed = visitedBoards.Count - 1;
+            resultLenght = solutionMoves.Count;
             saveElapsedTime(stopWatch);
-            return false;
+
+            if (isFinished)
+            {
+                return true;
+            } 
+            else
+            {
+                resultLenght = -1;
+                return false;
+            }
         }
     }
 }

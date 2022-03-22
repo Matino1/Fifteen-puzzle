@@ -14,13 +14,16 @@ namespace pietnastka
         public int nodesVisited { get; set; }
         public int depth { get; set; }
         public string resultTime { get; set; }
-        public int nodeProcessed { get; set; }
+        public int nodesProcessed { get; set; }
+
+
 
         public List<char> solutionMoves { get; set; }
 
         public SearchingAlgorithm()
         {
             solutionMoves = new();
+            maxLevel = 20;
         }
 
         public void saveElapsedTime(Stopwatch stopwatch)
@@ -34,7 +37,7 @@ namespace pietnastka
             resultTime = elapsedTime;
         }
 
-        public virtual bool result(Gameboard rootBoard, int maxLevel)
+        public virtual bool result(Gameboard rootBoard)
         {
             return true;
         }

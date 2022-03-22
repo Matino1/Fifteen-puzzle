@@ -42,7 +42,7 @@ namespace pietnastka
 
         public long getBoardHash()
         {
-            return board.getBoardHash();
+            return board.getBoardHash() + level;
         }
 
         public Gameboard getGameboard()
