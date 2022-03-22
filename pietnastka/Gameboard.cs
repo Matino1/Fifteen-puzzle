@@ -12,8 +12,25 @@ namespace pietnastka
         private readonly int prime1 = 11;
         private readonly int prime2 = 3;
         private readonly int prime3 = 7;
+        private SearchingAlgorithm searchingAlgorithm;
 
         private int[,] board = new int[4, 4];
+
+        public Gameboard(string path)
+        {
+            readBoardFromFile(path);
+        }
+
+        public void setAlgorithm(SearchingAlgorithm algorithm)
+        {
+            this.searchingAlgorithm = algorithm;
+        }
+
+        public string getSolution()
+        {
+            searchingAlgorithm.result(this);
+            return searchingAlgorithm.getSolutionMoves();
+        }
 
         public Gameboard(int[,] board)
         {
@@ -30,6 +47,69 @@ namespace pietnastka
             return newGame.getBoardHash();
         }
 
+        public void readBoardFromFile(string fileName)
+        {
+            StreamReader file = new StreamReader(Environment.CurrentDirectory + @"\" + fileName + ".txt");
+            String line;
+            int j = 0;
+            try
+            {
+                line = file.ReadLine();
+                if (line != null)
+                    this.board = new int[Int32.Parse(line.Split(' ')[0]), Int32.Parse(line.Split(' ')[1])];
+                
+                line = file.ReadLine();
+                while (line != null)
+                {
+                    int [] row = new int[board.GetLength(1)];
+                    for (int i = 0; i < row.Length; i++)
+                    {
+                        this.board[j, i] = Int32.Parse(line.Split(' ')[i]);
+                    }
+                    j++;
+                    line = file.ReadLine();
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception: " + e.Message);
+            }
+            finally
+            {
+                if (file != null)
+                {
+                    file.Close();
+                }
+            }
+        }
+        public void saveSolutionToFile(string fileName)
+        {
+            StreamWriter file = new StreamWriter(Environment.CurrentDirectory + @"\" + fileName + ".txt");
+            try
+            {
+                if (getSolution() == "")
+                {
+                    file.Write("-1");
+                }
+                else
+                {
+                    file.WriteLine(getSolution().Length);
+                    file.Write(getSolution());
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception: " + e.Message);
+            }
+            finally
+            {
+                if (file != null)
+                {
+                    file.Close();
+                }
+            }
+        }
         private bool isLegal()
         {
             List<int> numbers = new List<int>();

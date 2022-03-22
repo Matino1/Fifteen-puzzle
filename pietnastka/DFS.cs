@@ -9,7 +9,7 @@ namespace pietnastka
 {
     internal class DFS : SearchingAlgorithm
     {
-        public DFS(): base()
+        public DFS() : base()
         {
 
         }
@@ -26,7 +26,6 @@ namespace pietnastka
             bool isFinished = false;
             Node node;
             List<long> visitedBoards = new List<long>();
-            int k = 0;
             while (stack.Any())
             {
                 node = stack.Pop();

@@ -23,7 +23,7 @@ namespace pietnastka
         public SearchingAlgorithm()
         {
             solutionMoves = new();
-            maxLevel = 20;
+            maxLevel = 45;
         }
 
         public void saveElapsedTime(Stopwatch stopwatch)
@@ -40,6 +40,16 @@ namespace pietnastka
         public virtual bool result(Gameboard rootBoard)
         {
             return true;
+        }
+
+        public string getSolutionMoves()
+        {
+            string solutionMoves = "";
+            foreach (char move in this.solutionMoves)
+            {
+                solutionMoves += move;
+            }
+            return solutionMoves;
         }
 
     }

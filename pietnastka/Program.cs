@@ -17,26 +17,35 @@ int[,] game3 = new int[4, 4]{ {0, 1, 2, 7},
                               {13, 3, 6, 4},
                               {15, 14, 11, 5 } };
 
-
+Gameboard gameboard = new Gameboard("starting_board");
+gameboard.printBoard();
 SearchingAlgorithm bfs = new BFS();
-
-Gameboard gameboard = new Gameboard(game2);
-
-
-
-bfs.result(gameboard);
+gameboard.setAlgorithm(bfs);
+Console.WriteLine(gameboard.getSolution());
 Console.WriteLine("Solution depth: " + bfs.depth);
 Console.WriteLine("Nodes visited: " + bfs.nodesVisited);
 Console.WriteLine("Nodes processed: " + bfs.nodesProcessed);
 Console.WriteLine("Result lenght: " + bfs.resultLenght);
 Console.WriteLine("Time: " + bfs.resultTime);
 Console.Write("Solution: ");
-bfs.solutionMoves.ForEach(move => Console.Write(move));
-Console.WriteLine();
-Console.WriteLine();
-Console.WriteLine();
+gameboard.saveSolutionToFile("solution");
+//Gameboard gameboard = new Gameboard(game2);
 
-SearchingAlgorithm dfs = new DFS();
+
+
+//bfs.result(gameboard);
+//Console.WriteLine("Solution depth: " + bfs.depth);
+//Console.WriteLine("Nodes visited: " + bfs.nodesVisited);
+//Console.WriteLine("Nodes processed: " + bfs.nodesProcessed);
+//Console.WriteLine("Result lenght: " + bfs.resultLenght);
+//Console.WriteLine("Time: " + bfs.resultTime);
+//Console.Write("Solution: ");
+//bfs.solutionMoves.ForEach(move => Console.Write(move));
+//Console.WriteLine();
+//Console.WriteLine();
+//Console.WriteLine();
+
+//SearchingAlgorithm dfs = new DFS();
 
 
 /*Thread myThread = new System.Threading.Thread(new
@@ -44,11 +53,11 @@ SearchingAlgorithm dfs = new DFS();
 */
 
 
-dfs.result(gameboard);
-Console.WriteLine("Solution depth: " + dfs.depth);
-Console.WriteLine("Nodes visited: " + dfs.nodesVisited);
-Console.WriteLine("Nodes processed: " + dfs.nodesProcessed);
-Console.WriteLine("Result lenght: " + dfs.resultLenght);
-Console.WriteLine("Time: " + dfs.resultTime);
-Console.Write("Solution: ");
-dfs.solutionMoves.ForEach(move => Console.Write(move));
+//dfs.result(gameboard);
+//Console.WriteLine("Solution depth: " + dfs.depth);
+//Console.WriteLine("Nodes visited: " + dfs.nodesVisited);
+//Console.WriteLine("Nodes processed: " + dfs.nodesProcessed);
+//Console.WriteLine("Result lenght: " + dfs.resultLenght);
+//Console.WriteLine("Time: " + dfs.resultTime);
+//Console.Write("Solution: ");
+//dfs.solutionMoves.ForEach(move => Console.Write(move));

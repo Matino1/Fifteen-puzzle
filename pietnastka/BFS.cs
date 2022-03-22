@@ -18,7 +18,7 @@ namespace pietnastka
 
         private List<char> solutionMoves = new();*/
 
-        public BFS(): base()
+        public BFS() : base()
         {
           
         }
