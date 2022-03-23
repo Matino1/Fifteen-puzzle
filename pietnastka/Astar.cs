@@ -4,7 +4,7 @@ namespace pietnastka
 {
     internal class Astar : SearchingAlgorithm
     {
-        public Astar()
+        public Astar() : base()
         {
         }
 
