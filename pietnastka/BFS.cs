@@ -34,16 +34,21 @@ namespace pietnastka
 
             bool isFinished = false;
             Node node;
-            List<long> visitedBoards = new List<long>();
+            //List<long> visitedBoards = new List<long>();
+            HashSet<ulong> visitedBoards = new HashSet<ulong>();
             while (queue.Any())
             {
-                node = queue.Dequeue();
-
-                nodesVisited++;
-
-                if (!visitedBoards.Contains(node.getBoardHash()))
+                
+                node = queue.Dequeue();;
+                if (node.getPreviousMoves().Count == 0)
                 {
-                    visitedBoards.Add(node.getBoardHash());
+                    visitedBoards.Add(node.getGameboard().getBoardHash());
+                }
+                nodesProcessed++;
+
+                //if (visitedBoards.Add(node.getBoardHash()))
+                //{
+                    //visitedBoards.Add(node.getBoardHash());
                     if (node.getGameboard().IsFinished())
                     {
                         depth = node.level;
@@ -60,12 +65,18 @@ namespace pietnastka
                     foreach (char move in node.getPossibleMoves())
                     {
                         if (node.getGameboard().isMoveLegal(move))
-                            if (!visitedBoards.Contains(node.getGameboard().nextMove(move)))
+                        {
+                            if (visitedBoards.Add(node.getGameboard().nextMove(move)))
+                            {
                                 moves.Add(move);
+                                nodesVisited++;
+                            }
+                        }
                     }
+                                                           
                     if (node.level < maxLevel)
                         node.addChildren(moves);
-                }
+                //}
                 //Console.WriteLine(nodesVisited);
 
                 foreach (Node child in node.getChildren())
@@ -75,7 +86,7 @@ namespace pietnastka
                 }
             }
 
-            nodesProcessed = visitedBoards.Count - 1;
+            //nodesProcessed = visitedBoards.Count - 1;
             resultLenght = solutionMoves.Count;
             saveElapsedTime(stopWatch);
 

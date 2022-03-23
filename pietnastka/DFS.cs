@@ -25,16 +25,19 @@ namespace pietnastka
 
             bool isFinished = false;
             Node node;
-            List<long> visitedBoards = new List<long>();
+            //List<ulong> visitedBoards = new List<ulong>();
+            HashSet<ulong> visitedBoards = new HashSet<ulong>();
             while (stack.Any())
             {
                 node = stack.Pop();
-
-                nodesVisited++;
-
-                if (!visitedBoards.Contains(node.getBoardHash()))
+                if (node.getPreviousMoves().Count == 0)
                 {
-                    visitedBoards.Add(node.getBoardHash());
+                    visitedBoards.Add(node.getGameboard().getBoardHash());
+                }
+                nodesProcessed++;
+
+                //if (!visitedBoards.Add(node.getBoardHash()))
+                //{
                     if (node.getGameboard().IsFinished())
                     {
                         depth = node.level;
@@ -50,8 +53,13 @@ namespace pietnastka
                     foreach (char move in node.getPossibleMoves())
                     {
                         if (node.getGameboard().isMoveLegal(move))
-                            if (!visitedBoards.Contains(node.getGameboard().nextMove(move)))
+                        {
+                            if (visitedBoards.Add(node.getGameboard().nextMove(move)))
+                            {
                                 moves.Add(move);
+                                nodesVisited++;
+                            }
+                        }
                     }
 
                     if (node.level < maxLevel)
@@ -61,7 +69,7 @@ namespace pietnastka
                         {
                             stack.Push(child);
                         }*/
-                    }
+                    //}
                 }
                 //Console.WriteLine("Stack:" + stack.Count);
                 //Console.WriteLine("Level:" + node.level);
@@ -78,7 +86,7 @@ namespace pietnastka
                 }
             }
 
-            nodesProcessed = visitedBoards.Count - 1;
+            //nodesProcessed = visitedBoards.Count - 1;
             resultLenght = solutionMoves.Count;
             saveElapsedTime(stopWatch);
 

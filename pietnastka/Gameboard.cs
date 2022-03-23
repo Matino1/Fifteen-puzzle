@@ -99,7 +99,7 @@ namespace pietnastka
             findManhattanDistance();
         }
 
-        public long nextMove(char move)
+        public ulong nextMove(char move)
         {
             int [,] copiedBoard = copyBoard();
             Gameboard newGame = new Gameboard(copiedBoard);
@@ -357,14 +357,14 @@ namespace pietnastka
             }
             return true;
         }
-        public long getBoardHash()
+        public ulong getBoardHash()
         {
-            long hash = prime1;
+            ulong hash = (ulong) prime1;
             for (int i = 0; i < board.GetLength(0); i++)
             {
                 for (int j = 0; j < board.GetLength(1); j++)
                 {
-                    hash = hash * prime2 + board[i, j];
+                    hash = hash * (ulong) prime2 + (ulong) board[i, j];
                 }
             }
             return hash;

@@ -40,9 +40,9 @@ namespace pietnastka
                 this.previousMoves.Add(move);
         }   
 
-        public long getBoardHash()
+        public ulong getBoardHash()
         {
-            return board.getBoardHash() + level;
+            return board.getBoardHash() + (ulong) level;
         }
 
         public Gameboard getGameboard()
