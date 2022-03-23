@@ -13,12 +13,19 @@ namespace pietnastka
         private readonly int prime2 = 3;
         private readonly int prime3 = 7;
         private SearchingAlgorithm searchingAlgorithm;
+        public int hammingDistance { get; set; }
+        public int manhattanDistance { get; set; }
 
         private int[,] board = new int[4, 4];
+
 
         public Gameboard(string path)
         {
             readBoardFromFile(path);
+            this.hammingDistance = 0;
+            this.manhattanDistance = 0;
+            findHammingDistance();
+            findManhattanDistance();
         }
 
         public void setAlgorithm(SearchingAlgorithm algorithm)
@@ -31,10 +38,65 @@ namespace pietnastka
             searchingAlgorithm.result(this);
             return searchingAlgorithm.getSolutionMoves();
         }
+        public string getSolution(string algorithm)
+        {
+            searchingAlgorithm.result(this, algorithm);
+            return searchingAlgorithm.getSolutionMoves();
+        }
+
+        private int[] findPosition(int number)
+        {
+            int[,] finishedBoard = new int[this.board.GetLength(0), this.board.GetLength(1)];
+            for (int i = 0; i < board.GetLength(0); i++)
+            {
+                for (int j = 0; j < board.GetLength(1); j++)
+                {
+                    finishedBoard[i, j] = i * 4 + j + 1;
+                    if (i == board.GetLength(0) - 1 && j == board.GetLength(1) - 1)
+                    {
+                        finishedBoard[i, j] = 0;
+                    }
+                    if (finishedBoard[i, j] == number)
+                    {
+                        return new int[2] { i, j };
+                    }
+                }
+            }
+            return null;
+        }
+
+        private void findHammingDistance()
+        {
+            for (int i = 0; i < board.GetLength(0); i++)
+            {
+                for (int j =  0; j < board.GetLength(1); j++)
+                {
+                    if (board[i, j] != i * 4 + j + 1)
+                    {
+                        this.hammingDistance += 1;
+                    }
+                }
+            }
+        }
+
+        private void findManhattanDistance()
+        {
+            int [] position = new int[2];
+            for (int i = 0; i < board.GetLength(0); i++)
+            {
+                for (int j = 0; j < board.GetLength(1); j++)
+                {
+                    position = findPosition(this.board[i, j]);
+                    this.manhattanDistance += Math.Abs(i - position[0]) + Math.Abs(j - position[1]);
+                }
+            }
+        }
 
         public Gameboard(int[,] board)
         {
             this.board = board;
+            findHammingDistance();
+            findManhattanDistance();
         }
 
         public long nextMove(char move)
@@ -49,7 +111,7 @@ namespace pietnastka
 
         public void readBoardFromFile(string fileName)
         {
-            StreamReader file = new StreamReader(Environment.CurrentDirectory + @"\" + fileName + ".txt");
+            StreamReader file = new StreamReader(Environment.CurrentDirectory + @"\" + fileName);
             String line;
             int j = 0;
             try
@@ -85,7 +147,7 @@ namespace pietnastka
         }
         public void saveSolutionToFile(string fileName)
         {
-            StreamWriter file = new StreamWriter(Environment.CurrentDirectory + @"\" + fileName + ".txt");
+            StreamWriter file = new StreamWriter(Environment.CurrentDirectory + @"\" + fileName);
             try
             {
                 if (getSolution() == "")
@@ -259,6 +321,8 @@ namespace pietnastka
         {
             this.board = board;
             moveZero(move);
+            findHammingDistance();
+            findManhattanDistance();
         }
 
         public int[,] GetBoard()

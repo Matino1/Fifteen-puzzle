@@ -52,5 +52,9 @@ namespace pietnastka
             return solutionMoves;
         }
 
+        public virtual bool result(Gameboard rootBoard, string algorithm)
+        {
+            return false;
+        }
     }
 }

@@ -17,18 +17,42 @@ int[,] game3 = new int[4, 4]{ {0, 1, 2, 7},
                               {13, 3, 6, 4},
                               {15, 14, 11, 5 } };
 
-Gameboard gameboard = new Gameboard("starting_board");
+Gameboard gameboard = new Gameboard("jakChcesz.txt");
 gameboard.printBoard();
 SearchingAlgorithm bfs = new BFS();
+SearchingAlgorithm dfs = new BFS();
+SearchingAlgorithm astar = new Astar();
+
+gameboard.setAlgorithm(astar);
+Console.Write("Solution: ");
+Console.WriteLine(gameboard.getSolution("manh"));
+Console.WriteLine("Solution depth: " + astar.depth);
+Console.WriteLine("Nodes visited: " + astar.nodesVisited);
+Console.WriteLine("Nodes processed: " + astar.nodesProcessed);
+Console.WriteLine("Result lenght: " + astar.resultLenght);
+Console.WriteLine("Time: " + astar.resultTime);
+
+
 gameboard.setAlgorithm(bfs);
+Console.Write("Solution: ");
 Console.WriteLine(gameboard.getSolution());
 Console.WriteLine("Solution depth: " + bfs.depth);
 Console.WriteLine("Nodes visited: " + bfs.nodesVisited);
 Console.WriteLine("Nodes processed: " + bfs.nodesProcessed);
 Console.WriteLine("Result lenght: " + bfs.resultLenght);
 Console.WriteLine("Time: " + bfs.resultTime);
+
+
+gameboard.setAlgorithm(dfs);
 Console.Write("Solution: ");
-gameboard.saveSolutionToFile("solution");
+Console.WriteLine(gameboard.getSolution());
+Console.WriteLine("Solution depth: " + dfs.depth);
+Console.WriteLine("Nodes visited: " + dfs.nodesVisited);
+Console.WriteLine("Nodes processed: " + dfs.nodesProcessed);
+Console.WriteLine("Result lenght: " + dfs.resultLenght);
+Console.WriteLine("Time: " + dfs.resultTime);
+
+
 //Gameboard gameboard = new Gameboard(game2);
 
 
