@@ -32,7 +32,7 @@ namespace pietnastka
                 node = stack.Pop();
                 if (node.getPreviousMoves().Count == 0)
                 {
-                    visitedBoards.Add(node.getGameboard().getBoardHash());
+                    visitedBoards.Add(node.getBoardHash());
                 }
                 nodesProcessed++;
 
@@ -54,7 +54,7 @@ namespace pietnastka
                     {
                         if (node.getGameboard().isMoveLegal(move))
                         {
-                            if (visitedBoards.Add(node.getGameboard().nextMove(move)))
+                            if (visitedBoards.Add(node.getNextMoveHash(move)))
                             {
                                 moves.Add(move);
                                 nodesVisited++;

@@ -20,7 +20,7 @@ int[,] game3 = new int[4, 4]{ {0, 1, 2, 7},
 Gameboard gameboard = new Gameboard("starting_board.txt");
 gameboard.printBoard();
 SearchingAlgorithm bfs = new BFS();
-SearchingAlgorithm dfs = new BFS();
+SearchingAlgorithm dfs = new DFS();
 SearchingAlgorithm astar = new Astar();
 
 gameboard.setAlgorithm(astar);

@@ -45,6 +45,11 @@ namespace pietnastka
             return board.getBoardHash() + (ulong) level;
         }
 
+        public ulong getNextMoveHash(char move)
+        {
+            return board.nextMove(move) + (ulong)level;
+        }
+
         public Gameboard getGameboard()
         {
             return board;
