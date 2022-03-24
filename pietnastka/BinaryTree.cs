@@ -8,72 +8,80 @@ namespace pietnastka
 {
     internal class BinaryTree
     {
-        public TreeNode Root { get; set; }
+        public TreeNode root { get; set; }
 
-        public bool Add(TreeNode value)
+        public bool Add(TreeNode node)
         {
-            TreeNode before = null;
-            TreeNode after = this.Root;
-
-            while (after != null)
+            if (root is null)
             {
-                before = after;
-                if (value.gameNode.getGameboard().manhattanDistance < after.gameNode.getGameboard().manhattanDistance) //Is new node in left tree? 
-                    after = after.LeftNode;
-                else if (value.gameNode.getGameboard().manhattanDistance >= after.gameNode.getGameboard().manhattanDistance) //Is new node in right tree?
-                    after = after.RightNode;
-                else
+                root = node;
+                return true;
+            }
+
+            TreeNode parent = null;
+            TreeNode current = this.root;
+            while (current is not null)
+            {
+                parent = current;
+                
+                if (node.gameNode.getGameboard().manhattanDistance <= current.gameNode.getGameboard().manhattanDistance)
                 {
-                    //Exist same value
-                    return false;
+                    current = current.LeftNode;
+                    if (current is not null && current.gameNode.getGameboard().manhattanDistance <= node.gameNode.getGameboard().manhattanDistance)
+                    {
+                        parent.LeftNode = node;
+                        node.LeftNode = current;
+                        return true;
+                    }
+                }
+                else if (node.gameNode.getGameboard().manhattanDistance > current.gameNode.getGameboard().manhattanDistance)
+                {
+                    current = current.RightNode;
+                    if (current is not null && current.gameNode.getGameboard().manhattanDistance > node.gameNode.getGameboard().manhattanDistance)
+                    {
+                        parent.RightNode = node;
+                        node.RightNode = current;
+                        return true;
+                    }
                 }
             }
 
-            TreeNode newNode = new TreeNode();
-            newNode.gameNode = value.gameNode;
-
-            if (this.Root == null)//Tree ise empty
-                this.Root = newNode;
+            if (node.gameNode.getGameboard().manhattanDistance <= parent.gameNode.getGameboard().manhattanDistance)
+            {
+                parent.LeftNode = node;
+            }
             else
             {
-                if (value.gameNode.getGameboard().manhattanDistance < before.gameNode.getGameboard().manhattanDistance)
-                    before.LeftNode = newNode;
-                else
-                    before.RightNode = newNode;
+                parent.RightNode = node;
             }
 
             return true;
         }
 
-        public void Remove(Node value)
+        public TreeNode Remove()
         {
-            this.Root = Remove(this.Root, value);
-        }
-
-        private TreeNode Remove(TreeNode parent, Node key)
-        {
-            if (parent == null) return parent;
-
-            if (key.getGameboard().manhattanDistance < parent.gameNode.getGameboard().manhattanDistance) parent.LeftNode = Remove(parent.LeftNode, key);
-            else if (key.getGameboard().manhattanDistance > parent.gameNode.getGameboard().manhattanDistance)
-                parent.RightNode = Remove(parent.RightNode, key);
-
-            // if value is same as parent's value, then this is the node to be deleted  
-            else
+            TreeNode parent = this.root;
+            if (parent is null)
             {
-                // node with only one child or no child  
-                if (parent.LeftNode == null)
-                    return parent.RightNode;
-                else if (parent.RightNode == null)
-                    return parent.LeftNode;
-
-                // node with two children: Get the inorder successor (smallest in the right subtree)  
-                parent.gameNode.getGameboard().manhattanDistance = MinValue(parent.RightNode);
-
-                // Delete the inorder successor  
-                parent.RightNode = Remove(parent.RightNode, parent.gameNode);
+                return parent;
             }
-
+            TreeNode previous = new TreeNode();
+            if (parent.LeftNode is not null)
+            {
+                while (parent.LeftNode is not null)
+                {
+                    previous = parent;
+                    parent = parent.LeftNode;
+                }
+                previous.LeftNode = null;
+                return parent;
+            } 
+            else if (parent.RightNode is null || parent.RightNode.gameNode.getGameboard().manhattanDistance >= parent.gameNode.getGameboard().manhattanDistance)
+            {
+                this.root = parent.RightNode;
+                return parent;
+            }
+            
             return parent;
         }
 
@@ -91,7 +99,7 @@ namespace pietnastka
         }
         public TreeNode Find(int value)
         {
-            return this.Find(value, this.Root);
+            return this.Find(value, this.root);
         }
         private TreeNode Find(int value, TreeNode parent)
         {
@@ -107,7 +115,7 @@ namespace pietnastka
         }
         public int GetTreeDepth()
         {
-            return this.GetTreeDepth(this.Root);
+            return this.GetTreeDepth(this.root);
         }
 
         private int GetTreeDepth(TreeNode parent)

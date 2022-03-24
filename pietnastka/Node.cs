@@ -43,7 +43,7 @@ namespace pietnastka
 
         public ulong getBoardHash()
         {
-            return board.getBoardHash();
+            return board.getBoardHash() + prime * (ulong) level;
         }
 
         public ulong getNextMoveHash(char move)

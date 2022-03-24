@@ -39,12 +39,12 @@ namespace pietnastka
             Node node;
             //List<ulong> visitedBoards = new List<ulong>();
             HashSet<ulong> visitedBoards = new HashSet<ulong>();
-            while (tree.GetTreeDepth() > 0)
+            while (tree.root != null)
             {
                 //node = list.First();
                 //list.Remove(list.First());
-                node = tree.Find(tree.MinValue(tree.Root)).gameNode;
-                tree.Remove(tree.Find(tree.MinValue(tree.Root)).gameNode);
+
+                node = tree.Remove().gameNode;
 
                 nodesProcessed++;
 
