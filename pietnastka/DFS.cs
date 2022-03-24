@@ -29,7 +29,17 @@ namespace pietnastka
             HashSet<ulong> visitedBoards = new HashSet<ulong>();
             while (stack.Any())
             {
+                string prevs = "";
                 node = stack.Pop();
+                foreach (char c in node.getPreviousMoves())
+                {
+                    prevs += c;
+                }
+                if (prevs == "UULLD")
+                {
+
+                }
+
                 if (node.getPreviousMoves().Count == 0)
                 {
                     visitedBoards.Add(node.getBoardHash());

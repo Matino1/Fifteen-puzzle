@@ -51,7 +51,7 @@ namespace pietnastka
             {
                 for (int j = 0; j < board.GetLength(1); j++)
                 {
-                    finishedBoard[i, j] = i * 4 + j + 1;
+                    finishedBoard[i, j] = i * board.GetLength(0) + j + 1;
                     if (i == board.GetLength(0) - 1 && j == board.GetLength(1) - 1)
                     {
                         finishedBoard[i, j] = 0;

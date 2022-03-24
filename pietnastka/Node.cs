@@ -9,9 +9,10 @@ namespace pietnastka
     internal class Node
     {
         public int level { get; set; }
+        private readonly ulong prime = 7;
         private Gameboard board;
         private List<Node> children = new List<Node>();
-        private char[] possibleMoves = new char[4] { 'L', 'R', 'U', 'D' };
+        private char[] possibleMoves = new char[4] { 'U', 'L', 'D', 'R' };
         private List<char> previousMoves = new List<char>();
         public char[] getPossibleMoves()
         {
@@ -42,12 +43,12 @@ namespace pietnastka
 
         public ulong getBoardHash()
         {
-            return board.getBoardHash() + (ulong) level;
+            return board.getBoardHash();
         }
 
         public ulong getNextMoveHash(char move)
         {
-            return board.nextMove(move) + (ulong)level;
+            return board.nextMove(move);
         }
 
         public Gameboard getGameboard()

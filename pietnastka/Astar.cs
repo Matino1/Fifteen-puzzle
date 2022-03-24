@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Collections;
 
 namespace pietnastka
 {
@@ -13,18 +14,37 @@ namespace pietnastka
             Stopwatch stopWatch = Stopwatch.StartNew();
 
             Node rootNode = new Node(0, rootBoard);
+            TreeNode rootTreeNode = new TreeNode();
+            rootTreeNode.gameNode = rootNode;
 
-            List<Node> list = new List<Node>();
-            list.Add(rootNode);
+            //List<Node> list = new List<Node>();
+            //SortedList<int, Node> list = new SortedList<int, Node>();
+            //SortedSet<Node> list = new SortedSet<Node>();
+            /*if (algorithm == "manh")
+            {
+                list = new SortedSet<Node>(Comparer<Node>.Create((a1, a2) => a1.getGameboard().manhattanDistance.CompareTo(a2.getGameboard().manhattanDistance)));
+                //list.Add(rootNode.getGameboard().manhattanDistance, rootNode);
+            }
+            else if (algorithm == "hamm")
+            {
+                //list.Add(rootNode.getGameboard().hammingDistance, rootNode);
+                list = new SortedSet<Node>(Comparer<Node>.Create((a1, a2) => a1.getGameboard().hammingDistance.CompareTo(a2.getGameboard().hammingDistance)));
+            }*/
+            BinaryTree tree = new BinaryTree();
+            tree.Add(rootTreeNode);
+
+            //list.Add(rootNode);
 
             bool isFinished = false;
             Node node;
             //List<ulong> visitedBoards = new List<ulong>();
             HashSet<ulong> visitedBoards = new HashSet<ulong>();
-            while (list.Any())
+            while (tree.GetTreeDepth() > 0)
             {
-                node = list[0];
-                list.RemoveAt(0);
+                //node = list.First();
+                //list.Remove(list.First());
+                node = tree.Find(tree.MinValue(tree.Root)).gameNode;
+                tree.Remove(tree.Find(tree.MinValue(tree.Root)).gameNode);
 
                 nodesProcessed++;
 
@@ -32,7 +52,7 @@ namespace pietnastka
                 //{
                 if (node.getPreviousMoves().Count == 0)
                 {
-                    visitedBoards.Add(node.getGameboard().getBoardHash());
+                    visitedBoards.Add(node.getBoardHash());
                 }
                 if (node.getGameboard().IsFinished())
                 {
@@ -64,16 +84,30 @@ namespace pietnastka
                 foreach (Node child in nodes)
                 {
                     if (child.level <= maxLevel)
-                        list.Add(child);
+                    {
+                        /*if (algorithm == "manh")
+                        {
+                            list.Add(rootNode.getGameboard().manhattanDistance, rootNode);
+                        }
+                        else if (algorithm == "hamm")
+                        {
+                            list.Add(rootNode.getGameboard().hammingDistance, rootNode);
+                        }*/
+                        //list.Add(child);
+                        TreeNode childTreeNode = new TreeNode();
+                        childTreeNode.gameNode = child;
+                        tree.Add(childTreeNode);
+                    }
+                        //list.Add(child);
                 }
-                if (algorithm == "hamm")
+                /*if (algorithm == "hamm")
                 {
                     list.Sort((p, q) => p.getGameboard().hammingDistance.CompareTo(q.getGameboard().hammingDistance));
                 }
                 else if (algorithm == "manh")
                 {
                     list.Sort((p, q) => p.getGameboard().manhattanDistance.CompareTo(q.getGameboard().manhattanDistance));
-                }
+                }*/
 
                 //nodesProcessed = visitedBoards.Count - 1;
                 
