@@ -12,7 +12,7 @@ namespace pietnastka
         private readonly ulong prime = 7;
         private Gameboard board;
         private List<Node> children = new List<Node>();
-        private char[] possibleMoves = new char[4] { 'U', 'L', 'D', 'R' };
+        private char[] possibleMoves = new char[4] { 'L', 'R', 'D', 'U' };
         private List<char> previousMoves = new List<char>();
         public char[] getPossibleMoves()
         {
@@ -43,12 +43,12 @@ namespace pietnastka
 
         public ulong getBoardHash()
         {
-            return board.getBoardHash() + prime * (ulong) level;
+            return board.getBoardHash() + (ulong) level * prime;
         }
 
         public ulong getNextMoveHash(char move)
         {
-            return board.nextMove(move);
+            return board.nextMove(move) + (ulong) level * prime;
         }
 
         public Gameboard getGameboard()
@@ -67,6 +67,34 @@ namespace pietnastka
             Node tempNode = new Node(this.level + 1, tempBoard, this.previousMoves);
             tempNode.addPreviousMove(move);
             this.children.Add(tempNode);
+        }
+
+        public char getReversePreviousMove()
+        {
+            
+            if(this.previousMoves.Count > 0)
+            {
+                switch (this.previousMoves[previousMoves.Count - 1])
+                {
+                    case 'L':
+                        return 'R';
+                        break;
+
+                    case 'R':
+                        return 'L';
+                        break;
+
+                    case 'U':
+                        return 'D';
+                        break;
+
+                    case 'D':
+                        return 'U';
+                        break;
+                }
+            }
+            return 'N';
+            
         }
 
         public void addChildren(List<char> moves)

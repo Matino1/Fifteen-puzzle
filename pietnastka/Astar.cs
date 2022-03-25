@@ -13,7 +13,7 @@ namespace pietnastka
         {
             Stopwatch stopWatch = Stopwatch.StartNew();
 
-            Node rootNode = new Node(0, rootBoard);
+            Node rootNode = new Node(1, rootBoard);
             TreeNode rootTreeNode = new TreeNode();
             rootTreeNode.gameNode = rootNode;
 
@@ -32,6 +32,7 @@ namespace pietnastka
             }*/
             BinaryTree tree = new BinaryTree();
             tree.Add(rootTreeNode);
+            nodesVisited = 1;
 
             //list.Add(rootNode);
 
@@ -39,13 +40,12 @@ namespace pietnastka
             Node node;
             //List<ulong> visitedBoards = new List<ulong>();
             HashSet<ulong> visitedBoards = new HashSet<ulong>();
-            while (tree.root != null)
+            while (tree.root is not null)
             {
                 //node = list.First();
                 //list.Remove(list.First());
 
                 node = tree.Remove().gameNode;
-
                 nodesProcessed++;
 
                 //if (!visitedBoards.Contains(node.getBoardHash()))
@@ -64,7 +64,7 @@ namespace pietnastka
                         Console.WriteLine("Game already finished");
                     isFinished = true;
                 }
-
+                
                 List<char> moves = new List<char>();
                 foreach (char move in node.getPossibleMoves())
                 {
@@ -80,6 +80,7 @@ namespace pietnastka
                 if (node.level < maxLevel)
                     node.addChildren(moves);
                 //Console.WriteLine(nodesVisited);
+                //Console.WriteLine(tree.root is null);
                 List<Node> nodes = node.getChildren();
                 foreach (Node child in nodes)
                 {

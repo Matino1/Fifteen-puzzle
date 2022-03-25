@@ -46,36 +46,25 @@ namespace pietnastka
 
         private int[] findPosition(int number)
         {
-            int[,] finishedBoard = new int[this.board.GetLength(0), this.board.GetLength(1)];
-            for (int i = 0; i < board.GetLength(0); i++)
-            {
-                for (int j = 0; j < board.GetLength(1); j++)
-                {
-                    finishedBoard[i, j] = i * board.GetLength(0) + j + 1;
-                    if (i == board.GetLength(0) - 1 && j == board.GetLength(1) - 1)
-                    {
-                        finishedBoard[i, j] = 0;
-                    }
-                    if (finishedBoard[i, j] == number)
-                    {
-                        return new int[2] { i, j };
-                    }
-                }
-            }
-            return null;
+            return number == 0 ? new int[2] {board.GetLength(0) - 1, board.GetLength(1) - 1} : new int[2] { (number - 1) / board.GetLength(0), (number - 1) % board.GetLength(0) };
         }
 
         private void findHammingDistance()
         {
+            int x = 1;
             for (int i = 0; i < board.GetLength(0); i++)
             {
                 for (int j =  0; j < board.GetLength(1); j++)
                 {
-                    if (board[i, j] != i * 4 + j + 1)
+                    if (board[i, j] != x++)
                     {
                         this.hammingDistance += 1;
                     }
                 }
+            }
+            if (board[board.GetLength(0) - 1, board.GetLength(1) - 1] == 0)
+            {
+                this.hammingDistance--;
             }
         }
 
@@ -337,22 +326,18 @@ namespace pietnastka
             {
                 for (int j = 0; j < board.GetLength(1); j++)
                 {
-                    if (i == board.GetLength(0) - 1 && j == board.GetLength(1) - 1)
+                    if (board[i, j] == x)
                     {
-                        return board[i, j] == 0 ? true : false;
-                    } 
+                        x++;
+                    }
                     else
                     {
-                        if (board[i, j] == x)
+                        if (i == board.GetLength(0) - 1 && j == board.GetLength(1) - 1)
                         {
-                            x++;
+                            return board[i, j] == 0 ? true : false;
                         }
-                        else
-                        {
-                            return false;
-                        }
+                        return false;
                     }
-                    
                 }
             }
             return true;

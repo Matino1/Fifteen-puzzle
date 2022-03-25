@@ -15,6 +15,7 @@ namespace pietnastka
         public int depth { get; set; }
         public string resultTime { get; set; }
         public int nodesProcessed { get; set; }
+        public char prevMove { get; set; }
 
 
 
@@ -23,7 +24,7 @@ namespace pietnastka
         public SearchingAlgorithm()
         {
             solutionMoves = new();
-            maxLevel = 110;
+            maxLevel = 3;
         }
 
         public void saveElapsedTime(Stopwatch stopwatch)

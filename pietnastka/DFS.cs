@@ -22,81 +22,59 @@ namespace pietnastka
 
             Stack<Node> stack = new Stack<Node>();
             stack.Push(rootNode);
-
             bool isFinished = false;
             Node node;
-            //List<ulong> visitedBoards = new List<ulong>();
+
             HashSet<ulong> visitedBoards = new HashSet<ulong>();
+            visitedBoards.Add(rootNode.getBoardHash());
+
             while (stack.Any())
             {
-                string prevs = "";
                 node = stack.Pop();
-                foreach (char c in node.getPreviousMoves())
-                {
-                    prevs += c;
-                }
-                if (prevs == "UULLD")
-                {
 
-                }
+                if (node.level > maxLevel)
+                    continue;
 
-                if (node.getPreviousMoves().Count == 0)
-                {
-                    visitedBoards.Add(node.getBoardHash());
-                }
                 nodesProcessed++;
 
-                //if (!visitedBoards.Add(node.getBoardHash()))
-                //{
-                    if (node.getGameboard().IsFinished())
-                    {
-                        depth = node.level;
-                        maxLevel = node.level;
-                        solutionMoves = node.getPreviousMoves();
-                        //Console.WriteLine("Game already finished");
-                        /*if (node.getPreviousMoves().Count == 0)
-                            Console.WriteLine("Game already finished");*/
-                        isFinished = true;
-                    }
+                if (node.getGameboard().IsFinished())
+                {
+                    depth = node.level;
+                    maxLevel = node.level;
+                    solutionMoves = node.getPreviousMoves();
+                    isFinished = true;
+                }
 
+                if (node.level < maxLevel)
+                {
                     List<char> moves = new List<char>();
                     foreach (char move in node.getPossibleMoves())
                     {
+                        
                         if (node.getGameboard().isMoveLegal(move))
                         {
-                            if (visitedBoards.Add(node.getNextMoveHash(move)))
+                            nodesVisited++;
+                            if (visitedBoards.Add(node.getNextMoveHash(move)) && move != node.getReversePreviousMove())
                             {
                                 moves.Add(move);
-                                nodesVisited++;
+                            } else
+                            {
+                                //TODO
                             }
                         }
                     }
 
-                    if (node.level < maxLevel)
-                    {
-                        node.addChildren(moves);
-                       /* foreach (Node child in node.getChildren())
-                        {
-                            stack.Push(child);
-                        }*/
-                    //}
-                }
-                //Console.WriteLine("Stack:" + stack.Count);
-                //Console.WriteLine("Level:" + node.level);
+                    node.addChildren(moves);
+                
+                    List<Node> nodes = node.getChildren();
+                    nodes.Reverse();
 
-                List<Node> nodes = node.getChildren();
-                nodes.Reverse();
-
-                foreach (Node child in nodes)
-                {
-                    if (child.level <= maxLevel)
+                    foreach (Node child in nodes)
                     {
                         stack.Push(child);
                     }
                 }
             }
-
-            //nodesProcessed = visitedBoards.Count - 1;
             resultLenght = solutionMoves.Count;
             saveElapsedTime(stopWatch);
 
