@@ -9,8 +9,8 @@ int[,] game = new int[4, 4]{ {2, 3, 4, 8},
 
 int[,] game2 = new int[4, 4]{ {1, 7, 2, 3},
                               {5, 6, 8, 4},
-                              {10, 11, 12, 0},
-                              {9, 13, 14, 15 } };
+                              {10, 11, 12, 15},
+                              {9, 0, 13, 14 } };
 
 int[,] game3 = new int[4, 4]{ {0, 1, 2, 7},
                               {8, 9, 12, 10},
@@ -23,16 +23,9 @@ SearchingAlgorithm bfs = new BFS();
 SearchingAlgorithm dfs = new DFS();
 SearchingAlgorithm astar = new Astar();
 
-gameboard.setAlgorithm(bfs);
-Console.Write("Solution BFS: ");
-Console.WriteLine(gameboard.getSolution());
-Console.WriteLine("Solution depth: " + bfs.depth);
-Console.WriteLine("Nodes visited: " + bfs.nodesVisited);
-Console.WriteLine("Nodes processed: " + bfs.nodesProcessed);
-Console.WriteLine("Result lenght: " + bfs.resultLenght);
-Console.WriteLine("Time: " + bfs.resultTime);
 
-/*gameboard.setAlgorithm(astar);
+
+gameboard.setAlgorithm(astar);
 Console.Write("Solution A*: ");
 Console.WriteLine(gameboard.getSolution("manh"));
 Console.WriteLine("Solution depth: " + astar.depth);
@@ -40,9 +33,9 @@ Console.WriteLine("Nodes visited: " + astar.nodesVisited);
 Console.WriteLine("Nodes processed: " + astar.nodesProcessed);
 Console.WriteLine("Result lenght: " + astar.resultLenght);
 Console.WriteLine("Time: " + astar.resultTime);
-*/
 
 
+System.Threading.Thread.Sleep(2000);
 
 
 gameboard.setAlgorithm(dfs);
@@ -54,6 +47,15 @@ Console.WriteLine("Nodes processed: " + dfs.nodesProcessed);
 Console.WriteLine("Result lenght: " + dfs.resultLenght);
 Console.WriteLine("Time: " + dfs.resultTime);
 
+
+gameboard.setAlgorithm(bfs);
+Console.Write("Solution BFS: ");
+Console.WriteLine(gameboard.getSolution());
+Console.WriteLine("Solution depth: " + bfs.depth);
+Console.WriteLine("Nodes visited: " + bfs.nodesVisited);
+Console.WriteLine("Nodes processed: " + bfs.nodesProcessed);
+Console.WriteLine("Result lenght: " + bfs.resultLenght);
+Console.WriteLine("Time: " + bfs.resultTime);
 
 /*Gameboard gameboard2 = new Gameboard(game2);
 

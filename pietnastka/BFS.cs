@@ -34,10 +34,7 @@ namespace pietnastka
             {
                 node = queue.Dequeue();
 
-
                 nodesProcessed++;
-
-                
 
                 if (node.getGameboard().IsFinished())
                 {
@@ -47,7 +44,7 @@ namespace pietnastka
                     isFinished = true;
                     break;
                 }
-
+               
                 if (node.level < maxLevel)
                 {
                     List<char> moves = new List<char>();
