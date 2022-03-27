@@ -17,34 +17,14 @@ namespace pietnastka
             TreeNode rootTreeNode = new TreeNode();
             rootTreeNode.gameNode = rootNode;
 
-            //List<Node> list = new List<Node>();
-            //SortedList<int, Node> list = new SortedList<int, Node>();
-            //SortedSet<Node> list = new SortedSet<Node>();
-            /*if (algorithm == "manh")
-            {
-                list = new SortedSet<Node>(Comparer<Node>.Create((a1, a2) => a1.getGameboard().manhattanDistance.CompareTo(a2.getGameboard().manhattanDistance)));
-                //list.Add(rootNode.getGameboard().manhattanDistance, rootNode);
-            }
-            else if (algorithm == "hamm")
-            {
-                //list.Add(rootNode.getGameboard().hammingDistance, rootNode);
-                list = new SortedSet<Node>(Comparer<Node>.Create((a1, a2) => a1.getGameboard().hammingDistance.CompareTo(a2.getGameboard().hammingDistance)));
-            }*/
             BinaryTree tree = new BinaryTree();
             tree.Add(rootTreeNode);
-            nodesVisited = 1;
-
-            //list.Add(rootNode);
 
             bool isFinished = false;
             Node node;
-            //List<ulong> visitedBoards = new List<ulong>();
             HashSet<ulong> visitedBoards = new HashSet<ulong>();
             while (tree.root is not null)
             {
-                //node = list.First();
-                //list.Remove(list.First());
-
                 node = tree.Remove().gameNode;
                 nodesProcessed++;
 

@@ -24,7 +24,7 @@ namespace pietnastka
         public SearchingAlgorithm()
         {
             solutionMoves = new();
-            maxLevel = 3;
+            maxLevel = 20;
         }
 
         public void saveElapsedTime(Stopwatch stopwatch)

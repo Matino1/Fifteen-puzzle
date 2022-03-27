@@ -94,7 +94,6 @@ namespace pietnastka
                 }
             }
             return 'N';
-            
         }
 
         public void addChildren(List<char> moves)
