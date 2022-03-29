@@ -26,7 +26,7 @@ SearchingAlgorithm astar = new Astar();
 
 
 gameboard.setAlgorithm(astar);
-Console.Write("Solution A*: ");
+Console.Write("Solution A* manhattan: ");
 Console.WriteLine(gameboard.getSolution("manh"));
 Console.WriteLine("Solution depth: " + astar.depth);
 Console.WriteLine("Nodes visited: " + astar.nodesVisited);
@@ -34,8 +34,14 @@ Console.WriteLine("Nodes processed: " + astar.nodesProcessed);
 Console.WriteLine("Result lenght: " + astar.resultLenght);
 Console.WriteLine("Time: " + astar.resultTime);
 
-
-System.Threading.Thread.Sleep(2000);
+gameboard.setAlgorithm(astar);
+Console.Write("Solution A* hamming: ");
+Console.WriteLine(gameboard.getSolution("ham"));
+Console.WriteLine("Solution depth: " + astar.depth);
+Console.WriteLine("Nodes visited: " + astar.nodesVisited);
+Console.WriteLine("Nodes processed: " + astar.nodesProcessed);
+Console.WriteLine("Result lenght: " + astar.resultLenght);
+Console.WriteLine("Time: " + astar.resultTime);
 
 
 gameboard.setAlgorithm(dfs);

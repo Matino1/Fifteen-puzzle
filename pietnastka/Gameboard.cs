@@ -24,8 +24,8 @@ namespace pietnastka
             readBoardFromFile(path);
             this.hammingDistance = 0;
             this.manhattanDistance = 0;
-            findHammingDistance();
-            findManhattanDistance();
+            //findHammingDistance();
+            //findManhattanDistance();
         }
 
         public void setAlgorithm(SearchingAlgorithm algorithm)
@@ -68,7 +68,7 @@ namespace pietnastka
             }
         }
 
-        private void findManhattanDistance()
+        public void findManhattanDistance()
         {
             int [] position = new int[2];
             for (int i = 0; i < board.GetLength(0); i++)

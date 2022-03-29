@@ -14,14 +14,22 @@ namespace pietnastka
             Stopwatch stopWatch = Stopwatch.StartNew();
 
             Node rootNode = new Node(0, rootBoard);
-            //TreeNode rootTreeNode = new TreeNode();
-            //rootTreeNode.gameNode = rootNode;
 
-            //BinaryTree tree = new BinaryTree();
-            //tree.Add(rootTreeNode);
+            PriorityQueue<Node, int> priorityQueue = new PriorityQueue<Node, int>();
 
-            PriorityQueue<Node, int> list = new PriorityQueue<Node, int>();
-            list.Enqueue(rootNode, rootNode.getGameboard().manhattanDistance);
+            if (algorithm == "manh")
+            {
+                priorityQueue.Enqueue(rootNode, rootNode.getGameboard().manhattanDistance);
+            }
+            else if (algorithm == "ham")
+            {
+                priorityQueue.Enqueue(rootNode, rootNode.getGameboard().hammingDistance);
+            }
+            else
+            {
+                return false;
+            }
+            
 
             bool isFinished = false;
             Node node;
@@ -29,11 +37,10 @@ namespace pietnastka
 
             visitedBoards.Add(rootNode.getBoardHash());
 
-            while (list.Count != 0) //tree.root is not null)
+            while (priorityQueue.Count != 0)
             {
-                //node = tree.Remove().gameNode;
 
-                node = list.Dequeue();
+                node = priorityQueue.Dequeue();
 
                 if (node.level > maxLevel)
                     continue;
@@ -67,8 +74,15 @@ namespace pietnastka
 
                     List<Node> nodes = node.getChildren();
                     foreach (Node child in nodes)
-                    {    
-                        list.Enqueue(child, child.getGameboard().manhattanDistance);
+                    {
+                        if (algorithm == "manh")
+                        {
+                            priorityQueue.Enqueue(child, child.getGameboard().manhattanDistance);
+                        }
+                        else
+                        {
+                            priorityQueue.Enqueue(child, child.getGameboard().hammingDistance);
+                        }
                     } 
                 }
             }
