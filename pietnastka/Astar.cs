@@ -20,8 +20,8 @@ namespace pietnastka
             //BinaryTree tree = new BinaryTree();
             //tree.Add(rootTreeNode);
 
-            HashSet<Node> list = new HashSet<Node>();
-            list.Add(rootNode);
+            PriorityQueue<Node, int> list = new PriorityQueue<Node, int>();
+            list.Enqueue(rootNode, rootNode.getGameboard().manhattanDistance);
 
             bool isFinished = false;
             Node node;
@@ -29,12 +29,11 @@ namespace pietnastka
 
             visitedBoards.Add(rootNode.getBoardHash());
 
-            while (list.Any()) //tree.root is not null)
+            while (list.Count != 0) //tree.root is not null)
             {
                 //node = tree.Remove().gameNode;
 
-                node = list.MinBy(x => x.getGameboard().manhattanDistance);
-                list.Remove(node);
+                node = list.Dequeue();
 
                 if (node.level > maxLevel)
                     continue;
@@ -69,10 +68,7 @@ namespace pietnastka
                     List<Node> nodes = node.getChildren();
                     foreach (Node child in nodes)
                     {    
-                        //TreeNode childTreeNode = new TreeNode();
-                        //childTreeNode.gameNode = child;
-                        //tree.Add(childTreeNode);
-                        list.Add(child);
+                        list.Enqueue(child, child.getGameboard().manhattanDistance);
                     } 
                 }
             }
