@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using pietnastka;
 using System.Threading;
+using System.Diagnostics;
 
 int[,] game = new int[4, 4]{ {2, 3, 4, 8},
                              {1, 10, 6, 7},
@@ -17,15 +18,32 @@ int[,] game3 = new int[4, 4]{ {0, 1, 2, 7},
                               {13, 3, 6, 4},
                               {15, 14, 11, 5 } };
 
-Gameboard gameboard = new Gameboard(game2);
-gameboard.printBoard();
+Gameboard gameboard = new Gameboard(game);
+//gameboard.printBoard();
 SearchingAlgorithm bfs = new BFS();
 SearchingAlgorithm dfs = new DFS();
 SearchingAlgorithm astar = new Astar();
 
+for (int i = 0; i < 412; i++)
+{
+    string fileName = @"C:\Users\Kurogami\Desktop\test\file_" + (i + 1).ToString();
+    gameboard = new Gameboard(fileName);
+    gameboard.setAlgorithm(bfs);
+    if (!gameboard.isLegal())
+    {
+        Console.Write(fileName);
+    }
+    Console.Write("Solution: ");
+    Console.WriteLine(gameboard.getSolution());
+    Console.WriteLine("Solution depth: " + bfs.depth);
+    Console.WriteLine("Nodes visited: " + bfs.nodesVisited);
+    Console.WriteLine("Nodes processed: " + bfs.nodesProcessed);
+    Console.WriteLine("Result lenght: " + bfs.resultLenght);
+    Console.WriteLine("Time: " + bfs.resultTime);
+    bfs.Reset();
+}
 
-
-gameboard.setAlgorithm(astar);
+/*gameboard.setAlgorithm(astar);
 Console.Write("Solution A* manhattan: ");
 Console.WriteLine(gameboard.getSolution("manh"));
 Console.WriteLine("Solution depth: " + astar.depth);
@@ -52,16 +70,16 @@ Console.WriteLine("Nodes visited: " + dfs.nodesVisited);
 Console.WriteLine("Nodes processed: " + dfs.nodesProcessed);
 Console.WriteLine("Result lenght: " + dfs.resultLenght);
 Console.WriteLine("Time: " + dfs.resultTime);
+*/
 
-
-gameboard.setAlgorithm(bfs);
-Console.Write("Solution BFS: ");
-Console.WriteLine(gameboard.getSolution());
-Console.WriteLine("Solution depth: " + bfs.depth);
-Console.WriteLine("Nodes visited: " + bfs.nodesVisited);
-Console.WriteLine("Nodes processed: " + bfs.nodesProcessed);
-Console.WriteLine("Result lenght: " + bfs.resultLenght);
-Console.WriteLine("Time: " + bfs.resultTime);
+//gameboard.setAlgorithm(bfs);
+//Console.Write("Solution BFS: ");
+//Console.WriteLine(gameboard.getSolution());
+//Console.WriteLine("Solution depth: " + bfs.depth);
+//Console.WriteLine("Nodes visited: " + bfs.nodesVisited);
+//Console.WriteLine("Nodes processed: " + bfs.nodesProcessed);
+//Console.WriteLine("Result lenght: " + bfs.resultLenght);
+//Console.WriteLine("Time: " + bfs.resultTime);
 
 /*Gameboard gameboard2 = new Gameboard(game2);
 

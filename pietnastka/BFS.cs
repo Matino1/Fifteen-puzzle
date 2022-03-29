@@ -27,12 +27,20 @@ namespace pietnastka
             bool isFinished = false;
             Node node;
 
+            List<KeyValuePair<ulong, Node>> visitedBoardsWithHash = new List<KeyValuePair<ulong, Node>>();
+            visitedBoardsWithHash.Add(new KeyValuePair<ulong, Node>(rootNode.getBoardHash(), rootNode));
+            //list.Add(new KeyValuePair<string, string>("Name1", "Phone Num1"));
+            //foreach (KeyValuePair >< string, string> item in list)
+            //{
+            //    Console.Write(item.Key + "=>" + item.Value);
+            //}
             HashSet<ulong> visitedBoards = new HashSet<ulong>();
             visitedBoards.Add(rootNode.getBoardHash());
 
             while (queue.Any())
             {
                 node = queue.Dequeue();
+
 
                 nodesProcessed++;
 
@@ -60,7 +68,16 @@ namespace pietnastka
                             } 
                             else
                             {
-                                //TODO
+                                foreach (var visited in visitedBoardsWithHash)
+                                {
+                                    if (visited.Value.getBoardHash() == node.getNextMoveHash(move))
+                                    {
+                                        if (!visited.Value.getGameboard().CompareTo(node.NextMoveBoard(move))) 
+                                        {
+                                            moves.Add(move);
+                                        }
+                                    }
+                                }
                             }
                         }
                     }

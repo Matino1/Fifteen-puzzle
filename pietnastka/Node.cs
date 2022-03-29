@@ -50,7 +50,7 @@ namespace pietnastka
 
         public ulong getNextMoveHash(char move)
         {
-            return board.nextMove(move) + (ulong) level * prime;
+            return board.NextMoveHash(move) + (ulong) level * prime;
         }
 
         public Gameboard getGameboard()
@@ -61,6 +61,11 @@ namespace pietnastka
         public List<Node> getChildren()
         {
             return children;
+        }
+
+        public Gameboard NextMoveBoard(char move)
+        {
+            return board.NextMoveBoard(move);
         }
 
         public void addChild(char move)

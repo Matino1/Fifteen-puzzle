@@ -17,14 +17,25 @@ namespace pietnastka
         public int nodesProcessed { get; set; }
         public char prevMove { get; set; }
 
-
+        private readonly int MAX_LEVEL = 20;
 
         public List<char> solutionMoves { get; set; }
+
+        public void Reset()
+        {
+            maxLevel = MAX_LEVEL;
+            resultLenght = 0;
+            nodesVisited = 0;
+            depth = 0;
+            nodesProcessed = 0;
+            prevMove = '\0';
+            resultTime = "";
+        }
 
         public SearchingAlgorithm()
         {
             solutionMoves = new();
-            maxLevel = 20;
+            maxLevel = MAX_LEVEL;
         }
 
         public void saveElapsedTime(Stopwatch stopwatch)

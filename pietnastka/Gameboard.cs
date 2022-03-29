@@ -88,7 +88,7 @@ namespace pietnastka
             findManhattanDistance();
         }
 
-        public ulong nextMove(char move)
+        public ulong NextMoveHash(char move)
         {
             int [,] copiedBoard = copyBoard();
             Gameboard newGame = new Gameboard(copiedBoard);
@@ -98,9 +98,20 @@ namespace pietnastka
             return newGame.getBoardHash();
         }
 
+        public Gameboard NextMoveBoard(char move)
+        {
+            int[,] copiedBoard = copyBoard();
+            Gameboard newGame = new Gameboard(copiedBoard);
+            if (newGame.isMoveLegal(move))
+                newGame.moveZero(move);
+
+            return newGame;
+        }
+
         public void readBoardFromFile(string fileName)
         {
-            StreamReader file = new StreamReader(Environment.CurrentDirectory + @"\" + fileName);
+            //StreamReader file = new StreamReader(Environment.CurrentDirectory + @"\" + fileName);
+            StreamReader file = new StreamReader(fileName);
             String line;
             int j = 0;
             try
@@ -161,7 +172,7 @@ namespace pietnastka
                 }
             }
         }
-        private bool isLegal()
+        public bool isLegal()
         {
             List<int> numbers = new List<int>();
             int zeros = 0;
@@ -200,7 +211,7 @@ namespace pietnastka
             int[] zeroPosition = new int[2];
             if (!isLegal())
             {
-                Console.WriteLine("Board is not legal");
+                //Console.WriteLine("Board is not legal");
                 return zeroPosition;
             }
             
@@ -353,6 +364,47 @@ namespace pietnastka
                 }
             }
             return hash;
+        }
+
+        public bool CompareTo(Gameboard anoterBoard)
+        {
+            if (anoterBoard is null)
+            {
+                return false;
+            }
+
+            // Optimization for a common success case.
+            else if (Object.ReferenceEquals(this, anoterBoard))
+            {
+                return true;
+            }
+
+            // If run-time types are not exactly the same, return false.
+            else if (this.GetType() != anoterBoard.GetType())
+            {
+                return false;
+            }
+
+            else if (board.GetLength(0) != anoterBoard.board.GetLength(0) || board.GetLength(1) != anoterBoard.board.GetLength(1))
+            {
+                return false;
+            }
+
+            else
+            {
+                for (int i = 0; i < board.GetLength(0) - 1; i++)
+                {
+                    for (int j = 0; j < board.GetLength(1) - 1; j++)
+                    {
+                        if (board[i, j] != anoterBoard.board[i, j])
+                        {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
+
         }
     }
 }
