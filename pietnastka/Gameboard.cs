@@ -14,7 +14,7 @@ namespace pietnastka
         private readonly int prime3 = 7;
         private SearchingAlgorithm searchingAlgorithm;
         public int hammingDistance { get; set; }
-        public int manhattanDistance { get; set; }
+        public double manhattanDistance { get; set; }
 
         private int[,] board = new int[4, 4];
 
@@ -51,6 +51,7 @@ namespace pietnastka
 
         private void findHammingDistance()
         {
+            this.hammingDistance = 0;
             int x = 1;
             for (int i = 0; i < board.GetLength(0); i++)
             {
@@ -70,6 +71,7 @@ namespace pietnastka
 
         public void findManhattanDistance()
         {
+            //this.manhattanDistance = 0;
             int [] position = new int[2];
             for (int i = 0; i < board.GetLength(0); i++)
             {
@@ -84,8 +86,10 @@ namespace pietnastka
         public Gameboard(int[,] board)
         {
             this.board = board;
-            findHammingDistance();
-            findManhattanDistance();
+            this.hammingDistance = 0;
+            this.manhattanDistance = 0;
+            //findHammingDistance();
+            //findManhattanDistance();
         }
 
         public ulong NextMoveHash(char move)
@@ -321,8 +325,10 @@ namespace pietnastka
         {
             this.board = board;
             moveZero(move);
-            findHammingDistance();
-            findManhattanDistance();
+            this.hammingDistance = 0;
+            this.manhattanDistance = 0;
+            //findHammingDistance();
+            //findManhattanDistance();
         }
 
         public int[,] GetBoard()

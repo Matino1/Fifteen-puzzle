@@ -85,7 +85,7 @@ namespace pietnastka
             return parent;
         }
 
-        public int MinValue(TreeNode node)
+       /* public int MinValue(TreeNode node)
         {
             int minv = node.gameNode.getGameboard().manhattanDistance;
 
@@ -96,7 +96,7 @@ namespace pietnastka
             }
 
             return minv;
-        }
+        }*/
         public TreeNode Find(int value)
         {
             return this.Find(value, this.root);

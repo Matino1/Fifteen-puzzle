@@ -15,7 +15,7 @@ namespace pietnastka
 
             Node rootNode = new Node(0, rootBoard);
 
-            PriorityQueue<Node, int> priorityQueue = new PriorityQueue<Node, int>();
+            PriorityQueue<Node, double> priorityQueue = new PriorityQueue<Node, double>();
 
             if (algorithm == "manh")
             {
@@ -39,11 +39,11 @@ namespace pietnastka
 
             while (priorityQueue.Count != 0)
             {
-
                 node = priorityQueue.Dequeue();
 
-                if (node.level > maxLevel)
-                    continue;
+                //Console.WriteLine("Manh: " + node.getGameboard().manhattanDistance);
+                //Console.WriteLine("Level: " + node.level);
+                //Console.WriteLine();
 
                 nodesProcessed++;
 
@@ -53,6 +53,7 @@ namespace pietnastka
                     maxLevel = node.level;
                     solutionMoves = node.getPreviousMoves();
                     isFinished = true;
+                    break;
                 }
 
                 if (node.level < maxLevel)

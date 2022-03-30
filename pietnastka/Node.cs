@@ -12,7 +12,7 @@ namespace pietnastka
         private readonly ulong prime = 7;
         private Gameboard board;
         private List<Node> children = new List<Node>();
-        private char[] possibleMoves = new char[4] { 'L', 'R', 'D', 'U' };
+        private char[] possibleMoves = new char[4] { 'L', 'R', 'U', 'D' };
         private List<char> previousMoves = new List<char>();
         public char[] getPossibleMoves()
         {
@@ -79,7 +79,7 @@ namespace pietnastka
         public void findFullManhatanDistance()
         {
             board.findManhattanDistance();
-            board.manhattanDistance += level;
+            board.manhattanDistance += 0.001 * level;
         }
 
         public char getReversePreviousMove()
