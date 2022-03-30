@@ -33,9 +33,6 @@ namespace pietnastka
             {
                 node = stack.Pop();
 
-                if (node.level > maxLevel)
-                    continue;
-
                 nodesProcessed++;
 
                 if (node.IsFinished())
@@ -44,24 +41,20 @@ namespace pietnastka
                     maxLevel = node.level;
                     solutionMoves = node.getPreviousMoves();
                     isFinished = true;
-                    break;
                 }
 
                 if (node.level < maxLevel)
                 {
-                    //List<Node> nodes = new ();
-                    List<char> moves = new List<char>();
-                    int[,] nodeBoard = node.Board;
                     char lastMove = node.getReversePreviousMove();
                     char[] possibleMoves = node.getPossibleMoves();
                     for (int i = possibleMoves.Length - 1; i >= 0; i--)
                     {
                         char move = possibleMoves[i];
-                        if (node.isMoveLegal(move))
+                        if (node.isMoveLegal(move) && move != lastMove)
                         {
                             nodesVisited++;
                             Node child = new Node(node.level + 1, node.CopyBoard(), node.getPreviousMoves(), node.ZeroPosition, move);
-                            if (visitedBoards.Add(child.getBoardHash()) && move != lastMove)
+                            if (visitedBoards.Add(child.getBoardHash()))
                             {
                                 stack.Push(child);
                             }

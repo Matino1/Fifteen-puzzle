@@ -38,12 +38,38 @@ namespace pietnastka
             maxLevel = MAX_LEVEL;
         }
 
+        /*public virtual void xDD(Node node, HashSet<ulong> visitedBoards, )
+        {
+            if (node.level < maxLevel)
+            {
+                char lastMove = node.getReversePreviousMove();
+                char[] possibleMoves = node.getPossibleMoves();
+                for (int i = possibleMoves.Length - 1; i >= 0; i--)
+                {
+                    char move = possibleMoves[i];
+                    if (node.isMoveLegal(move) && move != lastMove)
+                    {
+                        nodesVisited++;
+                        Node child = new Node(node.level + 1, node.CopyBoard(), node.getPreviousMoves(), node.ZeroPosition, move);
+                        if (visitedBoards.Add(child.getBoardHash()))
+                        {
+                            queue.Enqueue(child);
+                        }
+                        else
+                        {
+                            //TODO
+                        }
+                    }
+                }
+            }
+        }*/
+
         public void saveElapsedTime(Stopwatch stopwatch)
         {
             stopwatch.Stop();
             TimeSpan ts = stopwatch.Elapsed;
 
-            string elapsedTime = String.Format("{0:00}.{1:000}s",
+            string elapsedTime = String.Format("{0:00}.{1:0000}s",
             ts.Seconds + (ts.Minutes * 60), ts.Milliseconds);
 
             resultTime = elapsedTime;

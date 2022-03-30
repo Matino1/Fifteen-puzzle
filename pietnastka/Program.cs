@@ -25,9 +25,10 @@ int[,] game4 = new int[4, 4]{ { 1, 6, 11, 8 },
 
 //Gameboard gameboard = new Gameboard(game);
 //gameboard.printBoard();
-//SearchingAlgorithm bfs = new BFS();
+SearchingAlgorithm bfs = new BFS();
 SearchingAlgorithm dfs = new DFS();
-//SearchingAlgorithm astar = new Astar();
+SearchingAlgorithm astar = new Astar();
+SearchingAlgorithm astar2 = new Astar();
 Node RootNode = new Node(0, game);
 
 /*for (int i = 0; i < 412; i++)
@@ -48,24 +49,26 @@ Node RootNode = new Node(0, game);
     Console.WriteLine("Time: " + bfs.resultTime);
     bfs.Reset();
 }*/
-/*gameboard.setAlgorithm(astar);
+RootNode.setAlgorithm(astar);
 Console.Write("Solution A* manhattan: ");
-Console.WriteLine(gameboard.getSolution("manh"));
+Console.WriteLine(RootNode.getSolution("manh"));
 Console.WriteLine("Solution depth: " + astar.depth);
 Console.WriteLine("Nodes visited: " + astar.nodesVisited);
 Console.WriteLine("Nodes processed: " + astar.nodesProcessed);
 Console.WriteLine("Result lenght: " + astar.resultLenght);
 Console.WriteLine("Time: " + astar.resultTime);
+Console.WriteLine();
 
 astar.Reset();
-gameboard.setAlgorithm(astar);
+RootNode.setAlgorithm(astar);
 Console.Write("Solution A* hamming: ");
-Console.WriteLine(gameboard.getSolution("ham"));
+Console.WriteLine(RootNode.getSolution("ham"));
 Console.WriteLine("Solution depth: " + astar.depth);
 Console.WriteLine("Nodes visited: " + astar.nodesVisited);
 Console.WriteLine("Nodes processed: " + astar.nodesProcessed);
 Console.WriteLine("Result lenght: " + astar.resultLenght);
-Console.WriteLine("Time: " + astar.resultTime);*/
+Console.WriteLine("Time: " + astar.resultTime);
+Console.WriteLine();
 
 
 RootNode.setAlgorithm(dfs);
@@ -78,14 +81,14 @@ Console.WriteLine("Result lenght: " + dfs.resultLenght);
 Console.WriteLine("Time: " + dfs.resultTime);
 Console.WriteLine();
 
-/*gameboard.setAlgorithm(bfs);
+RootNode.setAlgorithm(bfs);
 Console.Write("Solution BFS: ");
-Console.WriteLine(gameboard.getSolution());
+Console.WriteLine(RootNode.getSolution());
 Console.WriteLine("Solution depth: " + bfs.depth);
 Console.WriteLine("Nodes visited: " + bfs.nodesVisited);
 Console.WriteLine("Nodes processed: " + bfs.nodesProcessed);
 Console.WriteLine("Result lenght: " + bfs.resultLenght);
-Console.WriteLine("Time: " + bfs.resultTime);*/
+Console.WriteLine("Time: " + bfs.resultTime);
 
 /*Gameboard gameboard2 = new Gameboard(game2);
 

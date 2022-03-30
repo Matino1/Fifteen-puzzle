@@ -36,7 +36,7 @@ namespace pietnastka
             MoveZero(this.Board, move);
             UpdateZeroPosition(move);
             this.previousMoves = new List<char>(previousMoves);
-            
+            addPreviousMove(move);
         }
 
         private void UpdateZeroPosition(char move)
@@ -156,6 +156,11 @@ namespace pietnastka
         }
         public bool IsFinished()
         {
+            if (Board[Board.GetLength(0) - 1, Board.GetLength(1) - 1] != 0)
+            {
+                return false;
+            }
+            
             int x = 1;
             for (int i = 0; i < Board.GetLength(0); i++)
             {
@@ -167,9 +172,9 @@ namespace pietnastka
                     }
                     else
                     {
-                        if (i == Board.GetLength(0) - 1 && j == Board.GetLength(1) - 1)
+                        if (x == Board.GetLength(0) * Board.GetLength(1))
                         {
-                            return Board[i, j] == 0 ? true : false;
+                            return true;
                         }
                         return false;
                     }
@@ -450,7 +455,7 @@ namespace pietnastka
             return newboard;
         }
 
-        public void AddExistingChild(Node child)
+/*        public void AddExistingChild(Node child)
         {
             children.Add(child);
         }
@@ -458,7 +463,7 @@ namespace pietnastka
         public List<Node> getChildren()
         {
             return children;
-        }
+        }*/
 
         public char getReversePreviousMove()
         {

@@ -1,4 +1,4 @@
-﻿/*using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,10 +12,10 @@ namespace pietnastka
 
         public BFS() : base()
         {
-          
+
         }
 
-        public override bool result(Gameboard rootBoard)
+        public override bool result(int[,] rootBoard)
         {
             Stopwatch stopWatch = Stopwatch.StartNew();
 
@@ -27,13 +27,6 @@ namespace pietnastka
             bool isFinished = false;
             Node node;
 
-            List<KeyValuePair<ulong, Node>> visitedBoardsWithHash = new List<KeyValuePair<ulong, Node>>();
-            visitedBoardsWithHash.Add(new KeyValuePair<ulong, Node>(rootNode.getBoardHash(), rootNode));
-            //list.Add(new KeyValuePair<string, string>("Name1", "Phone Num1"));
-            //foreach (KeyValuePair >< string, string> item in list)
-            //{
-            //    Console.Write(item.Key + "=>" + item.Value);
-            //}
             HashSet<ulong> visitedBoards = new HashSet<ulong>();
             visitedBoards.Add(rootNode.getBoardHash());
 
@@ -41,45 +34,36 @@ namespace pietnastka
             {
                 node = queue.Dequeue();
 
-
                 nodesProcessed++;
 
-                if (node.getGameboard().IsFinished())
+                if (node.IsFinished())
                 {
                     depth = node.level;
-                    maxLevel = node.level;
                     solutionMoves = node.getPreviousMoves();
                     isFinished = true;
                     break;
                 }
 
-                if (node.level < maxLevel)
+                char lastMove = node.getReversePreviousMove();
+                char[] possibleMoves = node.getPossibleMoves();
+                for (int i = possibleMoves.Length - 1; i >= 0; i--)
                 {
-                    List<char> moves = new List<char>();
-                    foreach (char move in node.getPossibleMoves())
+                    char move = possibleMoves[i];
+                    if (node.isMoveLegal(move) && move != lastMove)
                     {
-
-                        if (node.getGameboard().isMoveLegal(move))
+                        nodesVisited++;
+                        Node child = new Node(node.level + 1, node.CopyBoard(), node.getPreviousMoves(), node.ZeroPosition, move);
+                        if (visitedBoards.Add(child.getBoardHash()))
                         {
-                            nodesVisited++;
-                            if (visitedBoards.Add(node.getNextMoveHash(move)) && move != node.getReversePreviousMove())
-                            {
-                                moves.Add(move);
-                            }
-                            else
-                            {
-                                //TODO
-                            }
+                            queue.Enqueue(child);
+                        }
+                        else
+                        {
+                            //TODO
                         }
                     }
-
-                    node.addChildren(moves);
-
-                    foreach (Node child in node.getChildren())
-                    {
-                        queue.Enqueue(child);
-                    }
                 }
+
             }
 
             resultLenght = solutionMoves.Count;
@@ -88,7 +72,7 @@ namespace pietnastka
             if (isFinished)
             {
                 return true;
-            } 
+            }
             else
             {
                 resultLenght = -1;
@@ -97,4 +81,3 @@ namespace pietnastka
         }
     }
 }
-*/

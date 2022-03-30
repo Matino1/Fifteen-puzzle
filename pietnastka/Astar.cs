@@ -1,4 +1,4 @@
-﻿/*using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Collections;
 
 namespace pietnastka
@@ -9,7 +9,7 @@ namespace pietnastka
         {
         }
 
-        public override bool result(int [,] rootBoard, string algorithm)
+        public override bool result(int[,] rootBoard, string algorithm)
         {
             Stopwatch stopWatch = Stopwatch.StartNew();
 
@@ -17,37 +17,57 @@ namespace pietnastka
 
             PriorityQueue<Node, int> priorityQueue = new PriorityQueue<Node, int>();
 
-            if (algorithm == "manh")
-            {
-                priorityQueue.Enqueue(rootNode, rootNode.ManhattanDistance);
-            }
-            else if (algorithm == "ham")
-            {
-                priorityQueue.Enqueue(rootNode, rootNode.HammingDistance);
-            }
-            else
-            {
-                return false;
-            }
-            
-
             bool isFinished = false;
-            Node node;
+            Node node = rootNode;
             HashSet<ulong> visitedBoards = new HashSet<ulong>();
 
             visitedBoards.Add(rootNode.getBoardHash());
 
-            while (priorityQueue.Count != 0)
+            do
+            {
+                nodesProcessed++;
+
+                if (node.IsFinished())
+                {
+                    depth = node.level;
+                    solutionMoves = node.getPreviousMoves();
+                    isFinished = true;
+                    break;
+                }
+
+                char lastMove = node.getReversePreviousMove();
+                char[] possibleMoves = node.getPossibleMoves();
+                for (int i = possibleMoves.Length - 1; i >= 0; i--)
+                {
+                    char move = possibleMoves[i];
+                    if (node.isMoveLegal(move) && move != lastMove)
+                    {
+                        nodesVisited++;
+                        Node child = new Node(node.level + 1, node.CopyBoard(), node.getPreviousMoves(), node.ZeroPosition, move);
+                        if (algorithm == "manh")
+                        {
+                            child.findManhattanDistance();
+                            priorityQueue.Enqueue(child, child.ManhattanDistance);
+                        }
+                        else
+                        {
+                            child.findHammingDistance();
+                            priorityQueue.Enqueue(child, child.HammingDistance);
+                        }
+                    }
+                }
+                node = priorityQueue.Dequeue();
+
+            } while (priorityQueue.Count != 0);
+
+
+            /*while (priorityQueue.Count != 0)
             {
                 node = priorityQueue.Dequeue();
 
-                //Console.WriteLine("Manh: " + node.getGameboard().manhattanDistance);
-                //Console.WriteLine("Level: " + node.level);
-                //Console.WriteLine();
-
                 nodesProcessed++;
 
-                if (node.getGameboard().IsFinished())
+                if (node.IsFinished())
                 {
                     depth = node.level;
                     maxLevel = node.level;
@@ -56,39 +76,38 @@ namespace pietnastka
                     break;
                 }
 
-                if (node.level < maxLevel)
-                {
-                    List<char> moves = new List<char>();
-                    foreach (char move in node.getPossibleMoves())
+                //if (node.level < maxLevel)
+                //{
+                    char lastMove = node.getReversePreviousMove();
+                    char[] possibleMoves = node.getPossibleMoves();
+                    for (int i = possibleMoves.Length - 1; i >= 0; i--)
                     {
-                        if (node.getGameboard().isMoveLegal(move))
+                        char move = possibleMoves[i];
+                        if (node.isMoveLegal(move) && move != lastMove)
                         {
                             nodesVisited++;
-                            if (*//*visitedBoards.Add(node.getNextMoveHash(move)) &&*//* move != node.getReversePreviousMove())
-                            {
-                                moves.Add(move);
-                            }
+                            Node child = new Node(node.level + 1, node.CopyBoard(), node.getPreviousMoves(), node.ZeroPosition, move);
+                            //if (visitedBoards.Add(child.getBoardHash()))
+                            //{
+                                if (algorithm == "manh")
+                                {
+                                    child.findManhattanDistance();
+                                    priorityQueue.Enqueue(child, child.ManhattanDistance);
+                                }
+                                else
+                                {
+                                    child.findHammingDistance();
+                                    priorityQueue.Enqueue(child, child.HammingDistance);
+                                }
+                            //}
+                            //else
+                            //{
+                                //TODO
+                           // }
                         }
                     }
-                    
-                    node.addChildren(moves);
-
-                    List<Node> nodes = node.getChildren();
-                    foreach (Node child in nodes)
-                    {
-                        if (algorithm == "manh")
-                        {
-                            child.findFullManhatanDistance();
-                            priorityQueue.Enqueue(child, child.getGameboard().manhattanDistance);
-                        }
-                        else
-                        {
-                            child.findFullHammingDistance();
-                            priorityQueue.Enqueue(child, child.getGameboard().hammingDistance);
-                        }
-                    } 
-                }
-            }
+                //}
+            }*/
             resultLenght = solutionMoves.Count;
             saveElapsedTime(stopWatch);
 
@@ -103,4 +122,4 @@ namespace pietnastka
             }
         }
     }
-}*/
+}
