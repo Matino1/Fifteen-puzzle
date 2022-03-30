@@ -53,6 +53,7 @@ namespace pietnastka
                     maxLevel = node.level;
                     solutionMoves = node.getPreviousMoves();
                     isFinished = true;
+                    break;
                 }
 
                 if (node.level < maxLevel)

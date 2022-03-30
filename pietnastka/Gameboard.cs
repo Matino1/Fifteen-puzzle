@@ -70,6 +70,7 @@ namespace pietnastka
 
         public void findManhattanDistance()
         {
+            this.manhattanDistance = 0;
             int [] position = new int[2];
             for (int i = 0; i < board.GetLength(0); i++)
             {
