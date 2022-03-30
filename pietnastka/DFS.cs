@@ -13,6 +13,7 @@ namespace pietnastka
         {
 
         }
+        public static int instances = 0;
 
         public override bool result(Gameboard rootBoard)
         {
@@ -47,32 +48,44 @@ namespace pietnastka
 
                 if (node.level < maxLevel)
                 {
+                    //List<Node> nodes = new ();
                     List<char> moves = new List<char>();
-                    foreach (char move in node.getPossibleMoves())
+                    int[,] nodeBoard = node.getGameboard().GetBoard();
+                    char lastMove = node.getReversePreviousMove();
+                    char[] possibleMoves = node.getPossibleMoves();
+                    for (int i = possibleMoves.Length - 1; i >= 0; i--)
                     {
-                        
+                        char move = possibleMoves[i];
                         if (node.getGameboard().isMoveLegal(move))
                         {
                             nodesVisited++;
-                            if (visitedBoards.Add(node.getNextMoveHash(move)) && move != node.getReversePreviousMove())
+                            Node child = new Node(node.level + 1, new Gameboard(nodeBoard, move));
+                            if (visitedBoards.Add(child.getBoardHash()) && move != lastMove)
                             {
-                                moves.Add(move);
-                            } else
+                                //node.AddExistingChild(child);
+                                stack.Push(child);
+                            }
+                            else
                             {
                                 //TODO
                             }
                         }
                     }
-
-                    node.addChildren(moves);
-                
-                    List<Node> nodes = node.getChildren();
-                    nodes.Reverse();
-
-                    foreach (Node child in nodes)
+                    /*foreach (char move in node.getPossibleMoves())
                     {
-                        stack.Push(child);
-                    }
+                        
+                        
+                    }*/
+
+                    //node.addChildren(moves);
+
+                    //List<Node> nodes = node.getChildren();
+                    ////nodes.Reverse();
+
+                    //foreach (Node child in nodes)
+                    //{
+                    //    stack.Push(child);
+                    //}
                 }
             }
             resultLenght = solutionMoves.Count;

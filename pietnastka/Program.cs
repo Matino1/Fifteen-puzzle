@@ -23,7 +23,7 @@ int[,] game4 = new int[4, 4]{ { 1, 6, 11, 8 },
                               { 2, 4, 0, 10 },
                               { 9, 5, 14, 15 } };
 
-Gameboard gameboard = new Gameboard(game4);
+Gameboard gameboard = new Gameboard(game);
 //gameboard.printBoard();
 SearchingAlgorithm bfs = new BFS();
 SearchingAlgorithm dfs = new DFS();
@@ -75,15 +75,17 @@ Console.WriteLine("Nodes visited: " + dfs.nodesVisited);
 Console.WriteLine("Nodes processed: " + dfs.nodesProcessed);
 Console.WriteLine("Result lenght: " + dfs.resultLenght);
 Console.WriteLine("Time: " + dfs.resultTime);
+Console.WriteLine();
+Console.WriteLine(Gameboard.instances);
 
-gameboard.setAlgorithm(bfs);
+/*gameboard.setAlgorithm(bfs);
 Console.Write("Solution BFS: ");
 Console.WriteLine(gameboard.getSolution());
 Console.WriteLine("Solution depth: " + bfs.depth);
 Console.WriteLine("Nodes visited: " + bfs.nodesVisited);
 Console.WriteLine("Nodes processed: " + bfs.nodesProcessed);
 Console.WriteLine("Result lenght: " + bfs.resultLenght);
-Console.WriteLine("Time: " + bfs.resultTime);
+Console.WriteLine("Time: " + bfs.resultTime);*/
 
 /*Gameboard gameboard2 = new Gameboard(game2);
 

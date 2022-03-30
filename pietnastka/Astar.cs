@@ -9,7 +9,7 @@ namespace pietnastka
         {
         }
 
-        public override bool result(Gameboard rootBoard, string algorithm)
+        public override bool result(int [,] rootBoard, string algorithm)
         {
             Stopwatch stopWatch = Stopwatch.StartNew();
 
@@ -19,11 +19,11 @@ namespace pietnastka
 
             if (algorithm == "manh")
             {
-                priorityQueue.Enqueue(rootNode, rootNode.getGameboard().manhattanDistance);
+                priorityQueue.Enqueue(rootNode, rootNode.ManhattanDistance);
             }
             else if (algorithm == "ham")
             {
-                priorityQueue.Enqueue(rootNode, rootNode.getGameboard().hammingDistance);
+                priorityQueue.Enqueue(rootNode, rootNode.HammingDistance);
             }
             else
             {
@@ -78,10 +78,12 @@ namespace pietnastka
                     {
                         if (algorithm == "manh")
                         {
+                            child.findFullManhatanDistance();
                             priorityQueue.Enqueue(child, child.getGameboard().manhattanDistance);
                         }
                         else
                         {
+                            child.findFullHammingDistance();
                             priorityQueue.Enqueue(child, child.getGameboard().hammingDistance);
                         }
                     } 

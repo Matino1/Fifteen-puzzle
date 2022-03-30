@@ -9,12 +9,10 @@ namespace pietnastka
 {
     internal class Gameboard
     {
-        private readonly int prime1 = 11;
+        public static int instances = 0;
         private readonly int prime2 = 3;
         private readonly int prime3 = 7;
         private SearchingAlgorithm searchingAlgorithm;
-        public int hammingDistance { get; set; }
-        public int manhattanDistance { get; set; }
 
         private int[,] board = new int[4, 4];
 
@@ -24,6 +22,7 @@ namespace pietnastka
             readBoardFromFile(path);
             this.hammingDistance = 0;
             this.manhattanDistance = 0;
+            instances++;
             //findHammingDistance();
             //findManhattanDistance();
         }
@@ -43,73 +42,14 @@ namespace pietnastka
             searchingAlgorithm.result(this, algorithm);
             return searchingAlgorithm.getSolutionMoves();
         }
-
-        private int[] findPosition(int number)
-        {
-            return number == 0 ? new int[2] {board.GetLength(0) - 1, board.GetLength(1) - 1} : new int[2] { (number - 1) / board.GetLength(0), (number - 1) % board.GetLength(0) };
-        }
-
-        public void findHammingDistance()
-        {
-            this.hammingDistance = 0;
-            int x = 1;
-            for (int i = 0; i < board.GetLength(0); i++)
-            {
-                for (int j =  0; j < board.GetLength(1); j++)
-                {
-                    if (board[i, j] != x++)
-                    {
-                        this.hammingDistance += 1;
-                    }
-                }
-            }
-            if (board[board.GetLength(0) - 1, board.GetLength(1) - 1] == 0)
-            {
-                this.hammingDistance--;
-            }
-        }
-
-        public void findManhattanDistance()
-        {
-            //this.manhattanDistance = 0;
-            int [] position = new int[2];
-            for (int i = 0; i < board.GetLength(0); i++)
-            {
-                for (int j = 0; j < board.GetLength(1); j++)
-                {
-                    position = findPosition(this.board[i, j]);
-                    this.manhattanDistance += Math.Abs(i - position[0]) + Math.Abs(j - position[1]);
-                }
-            }
-        }
-
         public Gameboard(int[,] board)
         {
             this.board = board;
             this.hammingDistance = 0;
             this.manhattanDistance = 0;
+            instances++;
             //findHammingDistance();
             //findManhattanDistance();
-        }
-
-        public ulong NextMoveHash(char move)
-        {
-            int [,] copiedBoard = copyBoard();
-            Gameboard newGame = new Gameboard(copiedBoard);
-            if (newGame.isMoveLegal(move))
-                newGame.moveZero(move);
-
-            return newGame.getBoardHash();
-        }
-
-        public Gameboard NextMoveBoard(char move)
-        {
-            int[,] copiedBoard = copyBoard();
-            Gameboard newGame = new Gameboard(copiedBoard);
-            if (newGame.isMoveLegal(move))
-                newGame.moveZero(move);
-
-            return newGame;
         }
 
         public void readBoardFromFile(string fileName)
@@ -176,76 +116,11 @@ namespace pietnastka
                 }
             }
         }
-        public bool isLegal()
-        {
-            List<int> numbers = new List<int>();
-            int zeros = 0;
+        
 
-            for (int i = 0; i < board.GetLength(0); i++)
-            {
-                for (int j = 0; j < board.GetLength(1); j++)
-                {
-                    numbers.Add(this.board[i, j]);
-                    if (this.board[i, j] == 0)
-                    {
-                        zeros++;
-                    }
-                }
-            }
-            numbers.Sort();
+        
 
-            if (zeros == 1)
-                numbers.RemoveAt(0);
-            else
-                return false;
-
-            for (int i = 1; i < numbers.Count - 1; i++)
-            {
-                if (numbers[i] != numbers[i - 1] + 1)
-                {
-                    return false;
-                }
-            }
-            return true;
-            //return numbers.Distinct().Count() == numbers.Count() ? true : false;
-        }
-
-        private int [] findZeroPosition(int [,] board)
-        {
-            int[] zeroPosition = new int[2];
-            if (!isLegal())
-            {
-                //Console.WriteLine("Board is not legal");
-                return zeroPosition;
-            }
-            
-            for (int i = 0; i < board.GetLength(0); i++)
-            {
-                for (int j = 0; j < board.GetLength(1); j++)
-                {
-                    if (board[i, j] == 0)
-                    {
-                        zeroPosition[0] = i;
-                        zeroPosition[1] = j;
-                        return zeroPosition;
-                    }
-                }
-            }
-            return zeroPosition;
-        }
-
-        public int [,] copyBoard()
-        {
-            int[,] copiedBoard = new int[this.board.GetLength(0), this.board.GetLength(1)];
-            for (int i = 0; i < board.GetLength(0); i++)
-            {
-                for (int j = 0; j < board.GetLength(1); j++)
-                {
-                    copiedBoard[i, j] = this.board[i, j];
-                }
-            }
-            return copiedBoard;
-        }
+        
 
         public bool isMoveLegal(char move)
         {
@@ -283,48 +158,13 @@ namespace pietnastka
                 Console.WriteLine();
             }
         }
-        public void moveZero(char move)
-        {
-            int[] zero = findZeroPosition(this.board);
-            int x = zero[0];
-            int y = zero[1];
-            int temp = 0;
-            switch (move)
-            {
-                case 'L':
-                    temp = this.board[x, y]; 
-                    this.board[x, y] = this.board[x, y - 1];
-                    this.board[x, y - 1] = temp;
-                    break;
-
-                case 'R':
-                    temp = this.board[x, y];
-                    this.board[x, y] = this.board[x, y + 1];
-                    this.board[x, y + 1] = temp;
-                    break;
-
-                case 'U':
-                    temp = this.board[x, y];
-                    this.board[x, y] = this.board[x - 1, y];
-                    this.board[x - 1, y] = temp;
-                    break;
-
-                case 'D':
-                    temp = this.board[x, y];
-                    this.board[x, y] = this.board[x + 1, y];
-                    this.board[x + 1, y] = temp;
-                    break;
-
-                default:
-                    Console.WriteLine("Wrong move");
-                    break;
-            }
-        }
+        
 
         public Gameboard(int[,] board, char move)
         {
-            this.board = board;
+            this.board = CopyExistingBoard(board);
             moveZero(move);
+            instances++;
             this.hammingDistance = 0;
             this.manhattanDistance = 0;
             //findHammingDistance();
@@ -359,18 +199,9 @@ namespace pietnastka
             }
             return true;
         }
-        public ulong getBoardHash()
-        {
-            ulong hash = (ulong) prime1;
-            for (int i = 0; i < board.GetLength(0); i++)
-            {
-                for (int j = 0; j < board.GetLength(1); j++)
-                {
-                    hash = hash * (ulong) prime2 + (ulong) board[i, j];
-                }
-            }
-            return hash;
-        }
+
+        
+        
 
         public bool CompareTo(Gameboard anoterBoard)
         {
