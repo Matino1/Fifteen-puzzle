@@ -14,7 +14,7 @@ namespace pietnastka
         private readonly int prime3 = 7;
         private SearchingAlgorithm searchingAlgorithm;
         public int hammingDistance { get; set; }
-        public double manhattanDistance { get; set; }
+        public int manhattanDistance { get; set; }
 
         private int[,] board = new int[4, 4];
 
@@ -49,7 +49,7 @@ namespace pietnastka
             return number == 0 ? new int[2] {board.GetLength(0) - 1, board.GetLength(1) - 1} : new int[2] { (number - 1) / board.GetLength(0), (number - 1) % board.GetLength(0) };
         }
 
-        private void findHammingDistance()
+        public void findHammingDistance()
         {
             this.hammingDistance = 0;
             int x = 1;
@@ -123,7 +123,7 @@ namespace pietnastka
                 line = file.ReadLine();
                 if (line != null)
                     this.board = new int[Int32.Parse(line.Split(' ')[0]), Int32.Parse(line.Split(' ')[1])];
-
+                
                 line = file.ReadLine();
                 while (line != null)
                 {
@@ -218,7 +218,7 @@ namespace pietnastka
                 //Console.WriteLine("Board is not legal");
                 return zeroPosition;
             }
-
+            
             for (int i = 0; i < board.GetLength(0); i++)
             {
                 for (int j = 0; j < board.GetLength(1); j++)
@@ -292,7 +292,7 @@ namespace pietnastka
             switch (move)
             {
                 case 'L':
-                    temp = this.board[x, y];
+                    temp = this.board[x, y]; 
                     this.board[x, y] = this.board[x, y - 1];
                     this.board[x, y - 1] = temp;
                     break;

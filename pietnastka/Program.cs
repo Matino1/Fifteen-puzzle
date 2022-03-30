@@ -8,17 +8,22 @@ int[,] game = new int[4, 4]{ {2, 3, 4, 0},
                              {1, 5, 10, 11 },
                              {9, 13, 14, 15 } };
 
-int[,] game2 = new int[4, 4]{ {7, 6, 3, 4},
-                              {11, 2, 15, 0},
-                              {1, 9, 8, 14},
-                              {5, 10, 13, 12 } };
+int[,] game2 = new int[4, 4]{ {1, 2, 0, 3},
+                              {5, 7, 8, 4},
+                              {10, 6, 12, 15},
+                              {9, 11, 13, 14 } };
 
 int[,] game3 = new int[4, 4]{ {0, 1, 2, 7},
                               {8, 9, 12, 10},
                               {13, 3, 6, 4},
                               {15, 14, 11, 5 } };
 
-Gameboard gameboard = new Gameboard(game3);
+int[,] game4 = new int[4, 4]{ { 1, 6, 11, 8 },
+                              { 7, 12, 13, 3 },
+                              { 2, 4, 0, 10 },
+                              { 9, 5, 14, 15 } };
+
+Gameboard gameboard = new Gameboard(game4);
 //gameboard.printBoard();
 SearchingAlgorithm bfs = new BFS();
 SearchingAlgorithm dfs = new DFS();
@@ -42,7 +47,6 @@ SearchingAlgorithm astar = new Astar();
     Console.WriteLine("Time: " + bfs.resultTime);
     bfs.Reset();
 }*/
-
 gameboard.setAlgorithm(astar);
 Console.Write("Solution A* manhattan: ");
 Console.WriteLine(gameboard.getSolution("manh"));
@@ -51,8 +55,8 @@ Console.WriteLine("Nodes visited: " + astar.nodesVisited);
 Console.WriteLine("Nodes processed: " + astar.nodesProcessed);
 Console.WriteLine("Result lenght: " + astar.resultLenght);
 Console.WriteLine("Time: " + astar.resultTime);
-astar.Reset();
 
+astar.Reset();
 gameboard.setAlgorithm(astar);
 Console.Write("Solution A* hamming: ");
 Console.WriteLine(gameboard.getSolution("ham"));
@@ -71,7 +75,6 @@ Console.WriteLine("Nodes visited: " + dfs.nodesVisited);
 Console.WriteLine("Nodes processed: " + dfs.nodesProcessed);
 Console.WriteLine("Result lenght: " + dfs.resultLenght);
 Console.WriteLine("Time: " + dfs.resultTime);
-
 
 gameboard.setAlgorithm(bfs);
 Console.Write("Solution BFS: ");

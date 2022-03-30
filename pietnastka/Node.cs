@@ -33,12 +33,14 @@ namespace pietnastka
             this.level = level;
             this.board = board;
             findFullManhatanDistance();
+            findFullHammingDistance();
         }
         public Node(int level, Gameboard board, List<char> previousMoves)
         {
             this.level = level;
             this.board = board;
             findFullManhatanDistance();
+            findFullHammingDistance();
             foreach (char move in previousMoves)
                 this.previousMoves.Add(move);
         }   
@@ -79,7 +81,13 @@ namespace pietnastka
         public void findFullManhatanDistance()
         {
             board.findManhattanDistance();
-            board.manhattanDistance += 0.001 * level;
+            board.manhattanDistance += level;
+        }
+
+        public void findFullHammingDistance()
+        {
+            board.findHammingDistance();
+            board.hammingDistance += level;
         }
 
         public char getReversePreviousMove()

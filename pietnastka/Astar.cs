@@ -15,7 +15,7 @@ namespace pietnastka
 
             Node rootNode = new Node(0, rootBoard);
 
-            PriorityQueue<Node, double> priorityQueue = new PriorityQueue<Node, double>();
+            PriorityQueue<Node, int> priorityQueue = new PriorityQueue<Node, int>();
 
             if (algorithm == "manh")
             {
@@ -64,7 +64,7 @@ namespace pietnastka
                         if (node.getGameboard().isMoveLegal(move))
                         {
                             nodesVisited++;
-                            if (visitedBoards.Add(node.getNextMoveHash(move)) && move != node.getReversePreviousMove())
+                            if (/*visitedBoards.Add(node.getNextMoveHash(move)) &&*/ move != node.getReversePreviousMove())
                             {
                                 moves.Add(move);
                             }

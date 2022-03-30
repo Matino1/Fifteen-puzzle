@@ -52,41 +52,27 @@ namespace pietnastka
                     isFinished = true;
                     break;
                 }
-               
+
                 if (node.level < maxLevel)
                 {
                     List<char> moves = new List<char>();
-
                     foreach (char move in node.getPossibleMoves())
                     {
+
                         if (node.getGameboard().isMoveLegal(move))
                         {
                             nodesVisited++;
                             if (visitedBoards.Add(node.getNextMoveHash(move)) && move != node.getReversePreviousMove())
                             {
                                 moves.Add(move);
-                            } 
+                            }
                             else
                             {
-                                bool isUnique = true;
-                                foreach (var visited in visitedBoardsWithHash)
-                                {
-                                    if (visited.Value.getBoardHash() == node.getNextMoveHash(move))
-                                    {
-                                        if (visited.Value.getGameboard().CompareTo(node.NextMoveBoard(move))) 
-                                        {
-                                            isUnique = false;
-                                        }
-                                    }
-                                }
-                                if (isUnique)
-                                {
-                                    moves.Add(move);
-                                }
+                                //TODO
                             }
                         }
                     }
-                                                           
+
                     node.addChildren(moves);
 
                     foreach (Node child in node.getChildren())
