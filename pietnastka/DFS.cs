@@ -15,7 +15,7 @@ namespace pietnastka
         }
         public static int instances = 0;
 
-        public override bool result(Gameboard rootBoard)
+        public override bool result(int[,] rootBoard)
         {
             Stopwatch stopWatch = Stopwatch.StartNew();
 
@@ -38,31 +38,31 @@ namespace pietnastka
 
                 nodesProcessed++;
 
-                if (node.getGameboard().IsFinished())
+                if (node.IsFinished())
                 {
                     depth = node.level;
                     maxLevel = node.level;
                     solutionMoves = node.getPreviousMoves();
                     isFinished = true;
+                    break;
                 }
 
                 if (node.level < maxLevel)
                 {
                     //List<Node> nodes = new ();
                     List<char> moves = new List<char>();
-                    int[,] nodeBoard = node.getGameboard().GetBoard();
+                    int[,] nodeBoard = node.Board;
                     char lastMove = node.getReversePreviousMove();
                     char[] possibleMoves = node.getPossibleMoves();
                     for (int i = possibleMoves.Length - 1; i >= 0; i--)
                     {
                         char move = possibleMoves[i];
-                        if (node.getGameboard().isMoveLegal(move))
+                        if (node.isMoveLegal(move))
                         {
                             nodesVisited++;
-                            Node child = new Node(node.level + 1, new Gameboard(nodeBoard, move));
+                            Node child = new Node(node.level + 1, node.CopyBoard(), node.getPreviousMoves(), node.ZeroPosition, move);
                             if (visitedBoards.Add(child.getBoardHash()) && move != lastMove)
                             {
-                                //node.AddExistingChild(child);
                                 stack.Push(child);
                             }
                             else
@@ -71,21 +71,6 @@ namespace pietnastka
                             }
                         }
                     }
-                    /*foreach (char move in node.getPossibleMoves())
-                    {
-                        
-                        
-                    }*/
-
-                    //node.addChildren(moves);
-
-                    //List<Node> nodes = node.getChildren();
-                    ////nodes.Reverse();
-
-                    //foreach (Node child in nodes)
-                    //{
-                    //    stack.Push(child);
-                    //}
                 }
             }
             resultLenght = solutionMoves.Count;

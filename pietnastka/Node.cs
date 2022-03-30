@@ -19,40 +19,48 @@ namespace pietnastka
         public int HammingDistance { get; set; }
         public int ManhattanDistance { get; set; }
         public int[] ZeroPosition { get; set; } = new int[2];
+
+        public SearchingAlgorithm SearchingAlgorithm { get; set; }
         //private int[,] board = new int[4, 4];
 
         public Node(int level, int[,] board)
         {
             this.level = level;
             this.Board = board;
-            ZeroPosition = findZeroPosition(board);
+            ZeroPosition = FindZeroPosition(board);
         }
-        public Node(int level, int[,] board, List<char> previousMoves, int[] zeroPosition)
+        public Node(int level, int[,] board, List<char> previousMoves, int[] zeroPosition, char move)
         {
             this.level = level;
             this.Board = board;
-            MoveZero(this.Board, previousMoves[previousMoves.Count - 1]);
+            MoveZero(this.Board, move);
+            UpdateZeroPosition(move);
             this.previousMoves = new List<char>(previousMoves);
-            switch(previousMoves[previousMoves.Count - 1])
+            
+        }
+
+        private void UpdateZeroPosition(char move)
+        {
+            switch (move)
             {
                 case 'L':
-                    this.ZeroPosition[0] = zeroPosition[0];
-                    this.ZeroPosition[1] = zeroPosition[1] - 1;
+                    this.ZeroPosition[0] = this.ZeroPosition[0];
+                    this.ZeroPosition[1] = this.ZeroPosition[1] - 1;
                     break;
 
                 case 'R':
-                    this.ZeroPosition[0] = zeroPosition[0];
-                    this.ZeroPosition[1] = zeroPosition[1] + 1;
+                    this.ZeroPosition[0] = this.ZeroPosition[0];
+                    this.ZeroPosition[1] = this.ZeroPosition[1] + 1;
                     break;
 
                 case 'U':
-                    this.ZeroPosition[0] = zeroPosition[0] - 1;
-                    this.ZeroPosition[1] = zeroPosition[1];
+                    this.ZeroPosition[0] = this.ZeroPosition[0] - 1;
+                    this.ZeroPosition[1] = this.ZeroPosition[1];
                     break;
 
                 case 'D':
-                    this.ZeroPosition[0] = zeroPosition[0] + 1;
-                    this.ZeroPosition[1] = zeroPosition[1];
+                    this.ZeroPosition[0] = this.ZeroPosition[0] + 1;
+                    this.ZeroPosition[1] = this.ZeroPosition[1];
                     break;
 
                 default:
@@ -68,7 +76,7 @@ namespace pietnastka
 
         public int[,] NextMoveBoard(char move)
         {
-            int[,] copiedBoard = CopyBoard(this.Board);
+            int[,] copiedBoard = CopyBoard();
             MoveZero(copiedBoard, move);
 
             return copiedBoard;
@@ -104,6 +112,105 @@ namespace pietnastka
                 }
             }
             return hash + (ulong)level * prime;
+        }
+
+        public bool CompareTo(int[,] anoterBoard)
+        {
+            if (anoterBoard is null)
+            {
+                return false;
+            }
+
+            // Optimization for a common success case.
+            else if (Object.ReferenceEquals(this, anoterBoard))
+            {
+                return true;
+            }
+
+            // If run-time types are not exactly the same, return false.
+            else if (this.GetType() != anoterBoard.GetType())
+            {
+                return false;
+            }
+
+            else if (Board.GetLength(0) != anoterBoard.GetLength(0) || Board.GetLength(1) != anoterBoard.GetLength(1))
+            {
+                return false;
+            }
+
+            else
+            {
+                for (int i = 0; i < Board.GetLength(0) - 1; i++)
+                {
+                    for (int j = 0; j < Board.GetLength(1) - 1; j++)
+                    {
+                        if (Board[i, j] != anoterBoard[i, j])
+                        {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
+
+        }
+        public bool IsFinished()
+        {
+            int x = 1;
+            for (int i = 0; i < Board.GetLength(0); i++)
+            {
+                for (int j = 0; j < Board.GetLength(1); j++)
+                {
+                    if (Board[i, j] == x)
+                    {
+                        x++;
+                    }
+                    else
+                    {
+                        if (i == Board.GetLength(0) - 1 && j == Board.GetLength(1) - 1)
+                        {
+                            return Board[i, j] == 0 ? true : false;
+                        }
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+        public void printBoard()
+        {
+            for (int i = 0; i < this.Board.GetLength(0); i++)
+            {
+                for (int j = 0; j < this.Board.GetLength(1); j++)
+                {
+                    Console.Write(this.Board[i, j]);
+                    Console.Write(" ");
+                }
+                Console.WriteLine();
+            }
+        }
+        public bool isMoveLegal(char move)
+        {
+            int[] zero = FindZeroPosition(this.Board);
+            switch (move)
+            {
+                case 'L':
+                    return zero[1] == 0 ? false : true;
+
+                case 'R':
+                    return zero[1] == this.Board.GetLength(1) - 1 ? false : true;
+
+                case 'U':
+                    return zero[0] == 0 ? false : true;
+
+                case 'D':
+                    return zero[0] == this.Board.GetLength(0) - 1 ? false : true;
+
+                default:
+                    Console.WriteLine("Wrong move");
+                    return false;
+
+            }
         }
 
         //public int [,] getNextMoveBoard(char move)
@@ -142,6 +249,85 @@ namespace pietnastka
             return number == 0 ? new int[2] { board.GetLength(0) - 1, board.GetLength(1) - 1 } : new int[2] { (number - 1) / board.GetLength(0), (number - 1) % board.GetLength(0) };
         }
 
+        public void setAlgorithm(SearchingAlgorithm algorithm)
+        {
+            this.SearchingAlgorithm = algorithm;
+        }
+
+        public string getSolution()
+        {
+            SearchingAlgorithm.result(this.Board);
+            return SearchingAlgorithm.getSolutionMoves();
+        }
+        public string getSolution(string algorithm)
+        {
+            SearchingAlgorithm.result(this.Board, algorithm);
+            return SearchingAlgorithm.getSolutionMoves();
+        }
+        public void saveSolutionToFile(string fileName)
+        {
+            StreamWriter file = new StreamWriter(Environment.CurrentDirectory + @"\" + fileName);
+            try
+            {
+                if (getSolution() == "")
+                {
+                    file.Write("-1");
+                }
+                else
+                {
+                    file.WriteLine(getSolution().Length);
+                    file.Write(getSolution());
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception: " + e.Message);
+            }
+            finally
+            {
+                if (file != null)
+                {
+                    file.Close();
+                }
+            }
+        }
+        public void readBoardFromFile(string fileName)
+        {
+            //StreamReader file = new StreamReader(Environment.CurrentDirectory + @"\" + fileName);
+            StreamReader file = new StreamReader(fileName);
+            String line;
+            int j = 0;
+            try
+            {
+                line = file.ReadLine();
+                if (line != null)
+                    this.Board = new int[Int32.Parse(line.Split(' ')[0]), Int32.Parse(line.Split(' ')[1])];
+
+                line = file.ReadLine();
+                while (line != null)
+                {
+                    int[] row = new int[Board.GetLength(1)];
+                    for (int i = 0; i < row.Length; i++)
+                    {
+                        this.Board[j, i] = Int32.Parse(line.Split(' ')[i]);
+                    }
+                    j++;
+                    line = file.ReadLine();
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception: " + e.Message);
+            }
+            finally
+            {
+                if (file != null)
+                {
+                    file.Close();
+                }
+            }
+        }
         public void findManhattanDistance()
         {
             //this.manhattanDistance = 0;
@@ -190,7 +376,7 @@ namespace pietnastka
             return true;
             //return numbers.Distinct().Count() == numbers.Count() ? true : false;
         }
-        private int[] findZeroPosition(int[,] board)
+        private int[] FindZeroPosition(int[,] board)
         {
             int[] zeroPosition = new int[2];
             if (!isLegal())
@@ -215,7 +401,7 @@ namespace pietnastka
         }
         public void MoveZero(int [,] board, char move)
         {
-            int[] zero = findZeroPosition(board);
+            int[] zero = FindZeroPosition(board);
             int x = zero[0];
             int y = zero[1];
             int temp = 0;
@@ -251,14 +437,14 @@ namespace pietnastka
             }
         }
 
-        public int[,] CopyBoard(int[,] board)
+        public int[,] CopyBoard()
         {
-            int[,] newboard = new int[board.GetLength(0), board.GetLength(1)];
+            int[,] newboard = new int[this.Board.GetLength(0), this.Board.GetLength(1)];
             for (int i = 0; i < this.Board.GetLength(0); i++)
             {
                 for (int j = 0; j < this.Board.GetLength(1); j++)
                 {
-                    newboard[i, j] = board[i, j];
+                    newboard[i, j] = this.Board[i, j];
                 }
             }
             return newboard;

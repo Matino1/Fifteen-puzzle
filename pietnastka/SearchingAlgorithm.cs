@@ -49,7 +49,7 @@ namespace pietnastka
             resultTime = elapsedTime;
         }
 
-        public virtual bool result(Gameboard rootBoard)
+        public virtual bool result(int[,] rootBoard)
         {
             return true;
         }
@@ -64,7 +64,7 @@ namespace pietnastka
             return solutionMoves;
         }
 
-        public virtual bool result(Gameboard rootBoard, string algorithm)
+        public virtual bool result(int[,] rootBoard, string algorithm)
         {
             return false;
         }

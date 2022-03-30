@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+﻿/*using System.Diagnostics;
 using System.Collections;
 
 namespace pietnastka
@@ -64,7 +64,7 @@ namespace pietnastka
                         if (node.getGameboard().isMoveLegal(move))
                         {
                             nodesVisited++;
-                            if (/*visitedBoards.Add(node.getNextMoveHash(move)) &&*/ move != node.getReversePreviousMove())
+                            if (*//*visitedBoards.Add(node.getNextMoveHash(move)) &&*//* move != node.getReversePreviousMove())
                             {
                                 moves.Add(move);
                             }
@@ -103,4 +103,4 @@ namespace pietnastka
             }
         }
     }
-}
+}*/

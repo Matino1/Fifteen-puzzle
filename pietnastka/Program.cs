@@ -23,11 +23,12 @@ int[,] game4 = new int[4, 4]{ { 1, 6, 11, 8 },
                               { 2, 4, 0, 10 },
                               { 9, 5, 14, 15 } };
 
-Gameboard gameboard = new Gameboard(game);
+//Gameboard gameboard = new Gameboard(game);
 //gameboard.printBoard();
-SearchingAlgorithm bfs = new BFS();
+//SearchingAlgorithm bfs = new BFS();
 SearchingAlgorithm dfs = new DFS();
-SearchingAlgorithm astar = new Astar();
+//SearchingAlgorithm astar = new Astar();
+Node RootNode = new Node(0, game);
 
 /*for (int i = 0; i < 412; i++)
 {
@@ -47,7 +48,7 @@ SearchingAlgorithm astar = new Astar();
     Console.WriteLine("Time: " + bfs.resultTime);
     bfs.Reset();
 }*/
-gameboard.setAlgorithm(astar);
+/*gameboard.setAlgorithm(astar);
 Console.Write("Solution A* manhattan: ");
 Console.WriteLine(gameboard.getSolution("manh"));
 Console.WriteLine("Solution depth: " + astar.depth);
@@ -64,19 +65,18 @@ Console.WriteLine("Solution depth: " + astar.depth);
 Console.WriteLine("Nodes visited: " + astar.nodesVisited);
 Console.WriteLine("Nodes processed: " + astar.nodesProcessed);
 Console.WriteLine("Result lenght: " + astar.resultLenght);
-Console.WriteLine("Time: " + astar.resultTime);
+Console.WriteLine("Time: " + astar.resultTime);*/
 
 
-gameboard.setAlgorithm(dfs);
+RootNode.setAlgorithm(dfs);
 Console.Write("Solution DFS: ");
-Console.WriteLine(gameboard.getSolution());
+Console.WriteLine(RootNode.getSolution());
 Console.WriteLine("Solution depth: " + dfs.depth);
 Console.WriteLine("Nodes visited: " + dfs.nodesVisited);
 Console.WriteLine("Nodes processed: " + dfs.nodesProcessed);
 Console.WriteLine("Result lenght: " + dfs.resultLenght);
 Console.WriteLine("Time: " + dfs.resultTime);
 Console.WriteLine();
-Console.WriteLine(Gameboard.instances);
 
 /*gameboard.setAlgorithm(bfs);
 Console.Write("Solution BFS: ");
