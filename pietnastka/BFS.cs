@@ -68,15 +68,20 @@ namespace pietnastka
                             } 
                             else
                             {
+                                bool isUnique = true;
                                 foreach (var visited in visitedBoardsWithHash)
                                 {
                                     if (visited.Value.getBoardHash() == node.getNextMoveHash(move))
                                     {
-                                        if (!visited.Value.getGameboard().CompareTo(node.NextMoveBoard(move))) 
+                                        if (visited.Value.getGameboard().CompareTo(node.NextMoveBoard(move))) 
                                         {
-                                            moves.Add(move);
+                                            isUnique = false;
                                         }
                                     }
+                                }
+                                if (isUnique)
+                                {
+                                    moves.Add(move);
                                 }
                             }
                         }

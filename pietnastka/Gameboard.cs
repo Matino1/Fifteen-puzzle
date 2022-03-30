@@ -123,7 +123,7 @@ namespace pietnastka
                 line = file.ReadLine();
                 if (line != null)
                     this.board = new int[Int32.Parse(line.Split(' ')[0]), Int32.Parse(line.Split(' ')[1])];
-                
+
                 line = file.ReadLine();
                 while (line != null)
                 {
@@ -218,7 +218,7 @@ namespace pietnastka
                 //Console.WriteLine("Board is not legal");
                 return zeroPosition;
             }
-            
+
             for (int i = 0; i < board.GetLength(0); i++)
             {
                 for (int j = 0; j < board.GetLength(1); j++)
@@ -292,7 +292,7 @@ namespace pietnastka
             switch (move)
             {
                 case 'L':
-                    temp = this.board[x, y]; 
+                    temp = this.board[x, y];
                     this.board[x, y] = this.board[x, y - 1];
                     this.board[x, y - 1] = temp;
                     break;

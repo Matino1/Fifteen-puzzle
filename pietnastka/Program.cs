@@ -18,13 +18,30 @@ int[,] game3 = new int[4, 4]{ {0, 1, 2, 7},
                               {13, 3, 6, 4},
                               {15, 14, 11, 5 } };
 
-Gameboard gameboard = new Gameboard(game);
+Gameboard gameboard = new Gameboard(game3);
 //gameboard.printBoard();
 SearchingAlgorithm bfs = new BFS();
 SearchingAlgorithm dfs = new DFS();
 SearchingAlgorithm astar = new Astar();
 
-
+/*for (int i = 0; i < 412; i++)
+{
+    string fileName = @"C:\Users\Kurogami\Desktop\test\file_" + (i + 1).ToString();
+    gameboard = new Gameboard(fileName);
+    gameboard.setAlgorithm(bfs);
+    if (!gameboard.isLegal())
+    {
+        Console.Write(fileName);
+    }
+    Console.Write("Solution: ");
+    Console.WriteLine(gameboard.getSolution());
+    Console.WriteLine("Solution depth: " + bfs.depth);
+    Console.WriteLine("Nodes visited: " + bfs.nodesVisited);
+    Console.WriteLine("Nodes processed: " + bfs.nodesProcessed);
+    Console.WriteLine("Result lenght: " + bfs.resultLenght);
+    Console.WriteLine("Time: " + bfs.resultTime);
+    bfs.Reset();
+}*/
 
 gameboard.setAlgorithm(astar);
 Console.Write("Solution A* manhattan: ");
@@ -34,6 +51,7 @@ Console.WriteLine("Nodes visited: " + astar.nodesVisited);
 Console.WriteLine("Nodes processed: " + astar.nodesProcessed);
 Console.WriteLine("Result lenght: " + astar.resultLenght);
 Console.WriteLine("Time: " + astar.resultTime);
+astar.Reset();
 
 gameboard.setAlgorithm(astar);
 Console.Write("Solution A* hamming: ");
