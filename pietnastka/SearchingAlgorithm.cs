@@ -17,7 +17,7 @@ namespace pietnastka
         public int nodesProcessed { get; set; }
         public char prevMove { get; set; }
 
-        private readonly int MAX_LEVEL = 20;
+        private readonly int MAX_LEVEL = 55;
 
         public List<char> solutionMoves { get; set; }
 

@@ -29,7 +29,7 @@ SearchingAlgorithm bfs = new BFS();
 SearchingAlgorithm dfs = new DFS();
 SearchingAlgorithm astar = new Astar();
 SearchingAlgorithm astar2 = new Astar();
-Node RootNode = new Node(0, game);
+Node RootNode = new Node(0, game3);
 
 /*for (int i = 0; i < 412; i++)
 {
@@ -89,6 +89,8 @@ Console.WriteLine("Nodes visited: " + bfs.nodesVisited);
 Console.WriteLine("Nodes processed: " + bfs.nodesProcessed);
 Console.WriteLine("Result lenght: " + bfs.resultLenght);
 Console.WriteLine("Time: " + bfs.resultTime);
+
+Thread.Sleep(10000);
 
 /*Gameboard gameboard2 = new Gameboard(game2);
 
