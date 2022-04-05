@@ -139,12 +139,12 @@ namespace pietnastka
         public ulong getBoardHash()
         {
             ulong hash = 0;
-            int bSize = Board.Length;
+            int bSize = Board.Length - 1;
             for (int i = 0; i < Board.GetLength(0); i++)
             {
                 for (int j = 0; j < Board.GetLength(1); j++)
                 {
-                    hash += power(prime1, --bSize) * (ulong)Board[i, j];
+                    hash += power(prime1, bSize--) * (ulong)Board[i, j];
                 }
             }
             return hash + (ulong)level * prime;
@@ -378,8 +378,11 @@ namespace pietnastka
                     this.ManhattanDistance += Math.Abs(i - position[0]) + Math.Abs(j - position[1]);
                 }
             }
+            this.ManhattanDistance -= Math.Abs(ZeroPosition[0] - Board.GetLength(0)) + Math.Abs(ZeroPosition[1] - Board.GetLength(0));
+
             this.ManhattanDistance += this.level;
         }
+
         public bool isLegal()
         {
             List<int> numbers = new List<int>();
