@@ -25,7 +25,9 @@ namespace pietnastka
             stack.Push(rootNode);
             bool isFinished = false;
             Node node;
-
+            
+            Dictionary<ulong, int> hashDepth = new Dictionary<ulong, int>();
+            hashDepth.Add(rootNode.getBoardHash(), 0);
             HashSet<ulong> visitedBoards = new HashSet<ulong>();
             visitedBoards.Add(rootNode.getBoardHash());
 
@@ -54,13 +56,21 @@ namespace pietnastka
                         {
                             nodesVisited++;
                             Node child = new Node(node.level + 1, node.CopyBoard(), node.getPreviousMoves(), node.ZeroPosition, move);
-                            if (visitedBoards.Add(child.getBoardHash()))
+                            ulong boardHash = child.getBoardHash();
+                            if (visitedBoards.Add(boardHash))
                             {
+                                hashDepth.Add(boardHash, child.level);
                                 stack.Push(child);
                             }
                             else
                             {
-                                //TODO
+                                int hashedBoardLevel = hashDepth.GetValueOrDefault(boardHash);
+                                if (hashedBoardLevel > child.level)
+                                {
+                                    hashDepth[boardHash] = child.level;
+                                    stack.Push(child);
+                                }
+
                             }
                         }
                     }

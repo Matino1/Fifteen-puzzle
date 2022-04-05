@@ -29,7 +29,7 @@ SearchingAlgorithm bfs = new BFS();
 SearchingAlgorithm dfs = new DFS();
 SearchingAlgorithm astar = new Astar();
 SearchingAlgorithm astar2 = new Astar();
-Node RootNode = new Node(0, game3);
+Node RootNode = new Node(0, game);
 
 /*for (int i = 0; i < 412; i++)
 {
