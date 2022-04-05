@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 
 namespace pietnastka
 {
@@ -11,8 +6,8 @@ namespace pietnastka
     {
         public DFS() : base()
         {
-
         }
+
         public static int instances = 0;
 
         public override bool result(int[,] rootBoard)
@@ -25,7 +20,7 @@ namespace pietnastka
             stack.Push(rootNode);
             bool isFinished = false;
             Node node;
-            
+
             Dictionary<ulong, int> hashDepth = new Dictionary<ulong, int>();
             hashDepth.Add(rootNode.getBoardHash(), 0);
             HashSet<ulong> visitedBoards = new HashSet<ulong>();
@@ -60,7 +55,7 @@ namespace pietnastka
                         if (node.isMoveLegal(move) && move != lastMove)
                         {
                             nodesVisited++;
-                            Node child = new Node(node.level + 1, node.CopyBoard(), node.getPreviousMoves(), node.ZeroPosition, move);
+                            Node child = new Node(node.level + 1, node.CopyBoard(), node.getPreviousMoves(), node.ZeroPosition, move, Node.possibleMoves);
                             ulong boardHash = child.getBoardHash();
                             if (visitedBoards.Add(boardHash))
                             {
@@ -75,7 +70,6 @@ namespace pietnastka
                                     hashDepth[boardHash] = child.level;
                                     stack.Push(child);
                                 }
-
                             }
                         }
                     }

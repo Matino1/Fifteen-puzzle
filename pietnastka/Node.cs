@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace pietnastka
+﻿namespace pietnastka
 {
     internal class Node
     {
         public int level { get; set; }
         private static readonly ulong prime = 7;
         private static readonly ulong prime1 = 31;
-        //private Gameboard board;
         private List<Node> children = new List<Node>();
-        private char[] possibleMoves = new char[4] { 'L', 'R', 'U', 'D' };
+        public static char[] possibleMoves = new char[4] { 'L', 'R', 'U', 'D' };
         private List<char> previousMoves = new List<char>();
         public int[,] Board { get; set; } = new int[4, 4];
         public int HammingDistance { get; set; }
@@ -36,45 +29,25 @@ namespace pietnastka
             ZeroPosition = FindZeroPosition(this.Board);
         }
 
-        public Node(int level, int[,] board, List<char> previousMoves, int[] zeroPosition, char move)
+        public Node(int level, int[,] board, List<char> previousMoves, int[] zeroPosition, char move, char[] possibleMoves)
         {
             this.level = level;
             this.Board = board;
             MoveZero(this.Board, move);
             UpdateZeroPosition(move);
+            Node.possibleMoves = possibleMoves;
             this.previousMoves = new List<char>(previousMoves);
             addPreviousMove(move);
         }
 
         public void setMovesOrder(char[] moves)
-        {
-            char[] oldMoves = new char[4];
-            for (int i = 0; i < 4; i++)
-            {
-                oldMoves[i] = this.possibleMoves[i];
-            }
-            char[] uniqueMoves = moves.Distinct().ToArray();
-            if (uniqueMoves.Length != 4)
-            {
-                return;
-            }
-            else
-            {
-                foreach (char move in uniqueMoves)
-                {
-                    if (!"LDUR".Contains(Char.ToUpper(move)))
-                    {
-                        this.possibleMoves = oldMoves;
-                        Console.WriteLine("Wrong moves");
-                        return;
-                    }
-                }
-            }
+        { 
             for (int i = 0; i < moves.Length; i++)
             {
-                this.possibleMoves[i] = Char.ToUpper(moves[i]);
+                Node.possibleMoves[i] = Char.ToUpper(moves[i]);
             }
         }
+
         private void UpdateZeroPosition(char move)
         {
             switch (move)
@@ -127,6 +100,7 @@ namespace pietnastka
         {
             previousMoves.Add(move);
         }
+
         private ulong power(ulong x, int y)
         {
             ulong result = 1;
@@ -136,6 +110,7 @@ namespace pietnastka
             }
             return result;
         }
+
         public ulong getBoardHash()
         {
             ulong hash = 0;
@@ -156,24 +131,18 @@ namespace pietnastka
             {
                 return false;
             }
-
-            // Optimization for a common success case.
             else if (Object.ReferenceEquals(this, anoterBoard))
             {
                 return true;
             }
-
-            // If run-time types are not exactly the same, return false.
             else if (this.GetType() != anoterBoard.GetType())
             {
                 return false;
             }
-
             else if (Board.GetLength(0) != anoterBoard.GetLength(0) || Board.GetLength(1) != anoterBoard.GetLength(1))
             {
                 return false;
             }
-
             else
             {
                 for (int i = 0; i < Board.GetLength(0) - 1; i++)
@@ -188,15 +157,15 @@ namespace pietnastka
                 }
                 return true;
             }
-
         }
+
         public bool IsFinished()
         {
             if (Board[Board.GetLength(0) - 1, Board.GetLength(1) - 1] != 0)
             {
                 return false;
             }
-            
+
             int x = 1;
             for (int i = 0; i < Board.GetLength(0); i++)
             {
@@ -218,6 +187,7 @@ namespace pietnastka
             }
             return true;
         }
+
         public void printBoard()
         {
             for (int i = 0; i < this.Board.GetLength(0); i++)
@@ -230,6 +200,7 @@ namespace pietnastka
                 Console.WriteLine();
             }
         }
+
         public bool isMoveLegal(char move)
         {
             int[] zero = FindZeroPosition(this.Board);
@@ -250,21 +221,9 @@ namespace pietnastka
                 default:
                     Console.WriteLine("Wrong move");
                     return false;
-
             }
         }
 
-        //public int [,] getNextMoveBoard(char move)
-        //{
-        //    int[,] copiedBoard = copyBoard();
-        //    Gameboard newGame = new Gameboard(copiedBoard);
-        //    if (newGame.isMoveLegal(move))
-        //    {
-        //        newGame.moveZero(move);
-        //    }
-
-        //    return newGame;
-        //}
         public void findHammingDistance()
         {
             this.HammingDistance = 0;
@@ -285,7 +244,8 @@ namespace pietnastka
             }
             this.HammingDistance += this.level;
         }
-        private int[] FindPosition(int [,] board, int number)
+
+        private int[] FindPosition(int[,] board, int number)
         {
             return number == 0 ? new int[2] { board.GetLength(0) - 1, board.GetLength(1) - 1 } : new int[2] { (number - 1) / board.GetLength(0), (number - 1) % board.GetLength(0) };
         }
@@ -300,11 +260,13 @@ namespace pietnastka
             SearchingAlgorithm.result(this.Board);
             return SearchingAlgorithm.getSolutionMoves();
         }
+
         public string getSolution(string algorithm)
         {
             SearchingAlgorithm.result(this.Board, algorithm);
             return SearchingAlgorithm.getSolutionMoves();
         }
+
         public void saveSolutionToFile(string fileName)
         {
             StreamWriter file = new StreamWriter(Environment.CurrentDirectory + @"\" + fileName);
@@ -328,9 +290,9 @@ namespace pietnastka
                 }
             }
         }
+
         public void readBoardFromFile(string fileName)
         {
-            //StreamReader file = new StreamReader(Environment.CurrentDirectory + @"\" + fileName);
             StreamReader file = new StreamReader(fileName);
             String line;
             int j = 0;
@@ -351,7 +313,6 @@ namespace pietnastka
                     j++;
                     line = file.ReadLine();
                 }
-
             }
             catch (Exception e)
             {
@@ -365,9 +326,9 @@ namespace pietnastka
                 }
             }
         }
+
         public void findManhattanDistance()
         {
-            //this.manhattanDistance = 0;
             int[] position = new int[2];
             int x = 1;
             for (int i = 0; i < Board.GetLength(0); i++)
@@ -414,14 +375,13 @@ namespace pietnastka
                 }
             }
             return true;
-            //return numbers.Distinct().Count() == numbers.Count() ? true : false;
         }
+
         private int[] FindZeroPosition(int[,] board)
         {
             int[] zeroPosition = new int[2];
             if (!isLegal())
             {
-                //Console.WriteLine("Board is not legal");
                 return zeroPosition;
             }
 
@@ -439,7 +399,8 @@ namespace pietnastka
             }
             return zeroPosition;
         }
-        public void MoveZero(int [,] board, char move)
+
+        public void MoveZero(int[,] board, char move)
         {
             int[] zero = FindZeroPosition(board);
             int x = zero[0];
@@ -490,20 +451,9 @@ namespace pietnastka
             return newboard;
         }
 
-/*        public void AddExistingChild(Node child)
-        {
-            children.Add(child);
-        }
-
-        public List<Node> getChildren()
-        {
-            return children;
-        }*/
-
         public char getReversePreviousMove()
         {
-            
-            if(this.previousMoves.Count > 0)
+            if (this.previousMoves.Count > 0)
             {
                 switch (this.previousMoves[previousMoves.Count - 1])
                 {
@@ -526,6 +476,7 @@ namespace pietnastka
             }
             return 'N';
         }
+
         public void saveAdditionalInfoToFile(string fileName)
         {
             StreamWriter file = new StreamWriter(Environment.CurrentDirectory + @"\" + fileName);

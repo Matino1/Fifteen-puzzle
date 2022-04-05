@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 
 namespace pietnastka
 {
     internal class BFS : SearchingAlgorithm
     {
-
         public BFS() : base()
         {
-
         }
 
         public override bool result(int[,] rootBoard)
@@ -56,18 +49,13 @@ namespace pietnastka
                     if (node.isMoveLegal(move) && move != lastMove)
                     {
                         nodesVisited++;
-                        Node child = new Node(node.level + 1, node.CopyBoard(), node.getPreviousMoves(), node.ZeroPosition, move);
+                        Node child = new Node(node.level + 1, node.CopyBoard(), node.getPreviousMoves(), node.ZeroPosition, move, Node.possibleMoves);
                         if (visitedBoards.Add(child.getBoardHash()))
                         {
                             queue.Enqueue(child);
                         }
-                        else
-                        {
-                            //TODO
-                        }
                     }
                 }
-
             }
 
             resultLenght = solutionMoves.Count;

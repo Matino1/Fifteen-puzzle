@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Collections;
 
 namespace pietnastka
 {
@@ -40,14 +39,14 @@ namespace pietnastka
                 }
 
                 char lastMove = node.getReversePreviousMove();
-                char[] possibleMoves = node.getPossibleMoves();
-                for (int i = possibleMoves.Length - 1; i >= 0; i--)
+                //char[] possibleMoves = Node.possible();
+                for (int i = Node.possibleMoves.Length - 1; i >= 0; i--)
                 {
-                    char move = possibleMoves[i];
+                    char move = Node.possibleMoves[i];
                     if (node.isMoveLegal(move) && move != lastMove)
                     {
                         nodesVisited++;
-                        Node child = new Node(node.level + 1, node.CopyBoard(), node.getPreviousMoves(), node.ZeroPosition, move);
+                        Node child = new Node(node.level + 1, node.CopyBoard(), node.getPreviousMoves(), node.ZeroPosition, move, Node.possibleMoves);
                         if (algorithm == "manh")
                         {
                             child.findManhattanDistance();
@@ -61,57 +60,8 @@ namespace pietnastka
                     }
                 }
                 node = priorityQueue.Dequeue();
-
             } while (priorityQueue.Count != 0);
 
-
-            /*while (priorityQueue.Count != 0)
-            {
-                node = priorityQueue.Dequeue();
-
-                nodesProcessed++;
-
-                if (node.IsFinished())
-                {
-                    depth = node.level;
-                    maxLevel = node.level;
-                    solutionMoves = node.getPreviousMoves();
-                    isFinished = true;
-                    break;
-                }
-
-                //if (node.level < maxLevel)
-                //{
-                    char lastMove = node.getReversePreviousMove();
-                    char[] possibleMoves = node.getPossibleMoves();
-                    for (int i = possibleMoves.Length - 1; i >= 0; i--)
-                    {
-                        char move = possibleMoves[i];
-                        if (node.isMoveLegal(move) && move != lastMove)
-                        {
-                            nodesVisited++;
-                            Node child = new Node(node.level + 1, node.CopyBoard(), node.getPreviousMoves(), node.ZeroPosition, move);
-                            //if (visitedBoards.Add(child.getBoardHash()))
-                            //{
-                                if (algorithm == "manh")
-                                {
-                                    child.findManhattanDistance();
-                                    priorityQueue.Enqueue(child, child.ManhattanDistance);
-                                }
-                                else
-                                {
-                                    child.findHammingDistance();
-                                    priorityQueue.Enqueue(child, child.HammingDistance);
-                                }
-                            //}
-                            //else
-                            //{
-                                //TODO
-                           // }
-                        }
-                    }
-                //}
-            }*/
             resultLenght = solutionMoves.Count;
             saveElapsedTime(stopWatch);
 
