@@ -13,7 +13,7 @@ namespace pietnastka
         private static readonly ulong prime1 = 31;
         //private Gameboard board;
         private List<Node> children = new List<Node>();
-        private char[] possibleMoves = new char[4] { 'U', 'D', 'L', 'R' };
+        private char[] possibleMoves = new char[4] { 'L', 'R', 'U', 'D' };
         private List<char> previousMoves = new List<char>();
         public int[,] Board { get; set; } = new int[4, 4];
         public int HammingDistance { get; set; }
@@ -21,7 +21,6 @@ namespace pietnastka
         public int[] ZeroPosition { get; set; } = new int[2];
 
         public SearchingAlgorithm SearchingAlgorithm { get; set; }
-        //private int[,] board = new int[4, 4];
 
         public Node(int level, int[,] board)
         {
@@ -29,6 +28,14 @@ namespace pietnastka
             this.Board = board;
             ZeroPosition = FindZeroPosition(board);
         }
+
+        public Node(int level, string fileName)
+        {
+            this.level = level;
+            readBoardFromFile(fileName);
+            ZeroPosition = FindZeroPosition(this.Board);
+        }
+
         public Node(int level, int[,] board, List<char> previousMoves, int[] zeroPosition, char move)
         {
             this.level = level;
@@ -39,6 +46,35 @@ namespace pietnastka
             addPreviousMove(move);
         }
 
+        public void setMovesOrder(char[] moves)
+        {
+            char[] oldMoves = new char[4];
+            for (int i = 0; i < 4; i++)
+            {
+                oldMoves[i] = this.possibleMoves[i];
+            }
+            char[] uniqueMoves = moves.Distinct().ToArray();
+            if (uniqueMoves.Length != 4)
+            {
+                return;
+            }
+            else
+            {
+                foreach (char move in uniqueMoves)
+                {
+                    if (!"LDUR".Contains(Char.ToUpper(move)))
+                    {
+                        this.possibleMoves = oldMoves;
+                        Console.WriteLine("Wrong moves");
+                        return;
+                    }
+                }
+            }
+            for (int i = 0; i < moves.Length; i++)
+            {
+                this.possibleMoves[i] = Char.ToUpper(moves[i]);
+            }
+        }
         private void UpdateZeroPosition(char move)
         {
             switch (move)
@@ -274,14 +310,10 @@ namespace pietnastka
             StreamWriter file = new StreamWriter(Environment.CurrentDirectory + @"\" + fileName);
             try
             {
-                if (getSolution() == "")
+                file.WriteLine(SearchingAlgorithm.resultLenght);
+                foreach (char move in SearchingAlgorithm.solutionMoves)
                 {
-                    file.Write("-1");
-                }
-                else
-                {
-                    file.WriteLine(getSolution().Length);
-                    file.Write(getSolution());
+                    file.Write(move);
                 }
             }
             catch (Exception e)
@@ -490,6 +522,29 @@ namespace pietnastka
                 }
             }
             return 'N';
+        }
+        public void saveAdditionalInfoToFile(string fileName)
+        {
+            StreamWriter file = new StreamWriter(Environment.CurrentDirectory + @"\" + fileName);
+            try
+            {
+                file.WriteLine(SearchingAlgorithm.resultLenght);
+                file.WriteLine(SearchingAlgorithm.nodesVisited);
+                file.WriteLine(SearchingAlgorithm.nodesProcessed);
+                file.WriteLine(SearchingAlgorithm.depth);
+                file.WriteLine(SearchingAlgorithm.resultTime);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception: " + e.Message);
+            }
+            finally
+            {
+                if (file != null)
+                {
+                    file.Close();
+                }
+            }
         }
     }
 }

@@ -35,12 +35,17 @@ namespace pietnastka
 
                 nodesProcessed++;
 
+                if (node.level > this.depth)
+                {
+                    this.depth = node.level;
+                }
+
                 if (node.IsFinished())
                 {
-                    depth = node.level;
                     maxLevel = node.level;
                     solutionMoves = node.getPreviousMoves();
                     isFinished = true;
+                    break;
                 }
 
                 if (node.level < maxLevel)
