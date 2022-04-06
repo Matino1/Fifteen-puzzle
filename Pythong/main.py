@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.ticker as mticker
 
 data = pd.read_csv("extractedData.txt", sep=' ')
 depth1 = data[data["depth"] == 1]
@@ -29,7 +30,7 @@ bfsDf = pd.DataFrame(columns=moves, index=index)
 dfsDf = pd.DataFrame(columns=moves, index=index)
 astarDf = pd.DataFrame(columns=heuristics, index=index)
 
-for k in range (5):
+for k in range(5):
     fig, axs = plt.subplots(2, 2, figsize=(4 * scale, 4 * scale))
     bfsDf = pd.DataFrame(columns=moves, index=index)
     dfsDf = pd.DataFrame(columns=moves, index=index)
@@ -90,23 +91,33 @@ for k in range (5):
 
     ax = axs[0, 0]
     ax = df.plot.bar(rot=0, ax=ax)
-    ax.set_title(plot_name[0])
+    ax.set_title(plot_name[0], pad=10)
     ax.set_ylabel(y_label[k])
+    ax.legend(fancybox=True, shadow=True, bbox_to_anchor=(1.01, 1.01))
+    ax.set_yscale('log')
+    ax.yaxis.set_major_formatter(mticker.ScalarFormatter())
+    #ax.set_xticks([20, 200, 500])
+    #ax.get_xaxis().set_major_formatter(mpl.ticker.ScalarFormatter())
 
-    ax = ax = axs[0, 1]
+    ax  = axs[0, 1]
     ax = astarDf.plot.bar(rot=0, ax=ax)
-    ax.set_title(plot_name[1])
+    ax.set_title(plot_name[1], pad=10)
+    ax.legend(fancybox=True, shadow=True, bbox_to_anchor=(1.01, 1.01))
 
     ax = axs[1, 0]
     ax = bfsDf.plot.bar(rot=0, ax=ax)
-    ax.set_title(plot_name[2])
+    ax.set_title(plot_name[2], pad=10)
     ax.set_ylabel(y_label[k])
     ax.set_xlabel(x_label)
+    ax.legend(fancybox=True, shadow=True, bbox_to_anchor=(1.01, 1.01))
 
     ax = axs[1, 1]
     ax = dfsDf.plot.bar(rot=0, ax=ax)
-    ax.set_title(plot_name[3])
+    ax.set_title(plot_name[3], pad=10)
     ax.set_xlabel(x_label)
+    ax.legend(fancybox=True, shadow=True, bbox_to_anchor=(1.01, 1.01))
+
+
 
     fig.tight_layout()
     plt.show()
